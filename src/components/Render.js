@@ -1,9 +1,27 @@
 import React from "react";
 import * as THREE from "three";
 
+
+// context passed down to Figures
 const RenderContext = React.createContext();
+
+// global time for all animations
 const startTime = new Date();
 
+/*
+Render is a React component that wraps all content that involve 3d rendering.
+canvas is a global canvas on which all 3d graphics are rendered. renderer is
+the renderer used by all 3d graphics. figures is a list of the figureInfo objects
+from each Figure descendant. The figureInfo objects are added to figures in the
+body of the Figure function via a RenderContext. figuresInView is a list of the
+divs of the Figures that are animated. It is used by observer, an IntersectionObserver
+that is used to start and stop rendering when an animated Figure enters the view.
+nextFrame is a function that renders the next function. It is passed down to the
+Figure level through the renderInfo object and the RenderContext. It is also called
+by the callback function of observer. The styling on the div is crucial for the 3d
+rendering (see the css in the code snippet at
+https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
+*/
 function Render(props) {
   const canvas = initializeCanvas();
   const renderer = initializeRenderer(canvas);
@@ -27,6 +45,7 @@ function Render(props) {
   );
 }
 
+/* Creates the renderer in Render */
 function initializeRenderer(canvas) {
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -49,8 +68,8 @@ function initializeRenderer(canvas) {
   return renderer;
 }
 
+/* Creates the canvas in Render */
 function initializeCanvas() {
-  console.log("calling initializeCanvas");
   const canvas = document.createElement("canvas");
   canvas.style.position = "absolute";
   canvas.style.left = "0px";
@@ -62,6 +81,7 @@ function initializeCanvas() {
   return canvas;
 }
 
+/* Creates the observer in Render */
 function initializeObserver(renderFunction, figuresInView) {
 
   function handleRender() {
@@ -74,13 +94,14 @@ function initializeObserver(renderFunction, figuresInView) {
   function handleIntersection(entries) {
     figuresInView.length = 0;
     figuresInView.push(...entries.filter(entry => entry.isIntersecting));
+    console.log(figuresInView);
     handleRender();
   }
 
-  return new IntersectionObserver(handleIntersection);
+  return new IntersectionObserver(handleIntersection, {threshold: [0, 0.1, 0.9, 1]});
 }
 
-// renders the plots (see extremely helpful post by gman here https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
+// updates the animations for each Figure and renders the next frame for each Figure (see extremely helpful post by gman here https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
 function nextFrameFunction(figures, renderer) {
   renderer.updateSize();
   renderer.domElement.style.transform = `translateY(${window.scrollY}px)`;
