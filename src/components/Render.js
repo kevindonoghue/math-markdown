@@ -108,13 +108,7 @@ function initializeObserver(renderFunction, figuresInView) {
     }
   }
 
-  /*
-  If threshold is left at the default value of 0 there is a big when an
-  animated Figure leaves the view at the same time as another enters.
-  This is the reason for the extra threshold values.
-  */
-  return new IntersectionObserver(handleIntersection, {threshold: [0, 1]});
-  // return new IntersectionObserver(handleIntersection, {threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]});
+  return new IntersectionObserver(handleIntersection);
 }
 
 // updates the animations for each Figure and renders the next frame for each Figure (see extremely helpful post by gman here https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
@@ -129,6 +123,7 @@ function nextFrameFunction(figures, renderer) {
   renderer.setClearColor(0xffffff);
   renderer.setScissorTest(true);
 
+  // need to call ... here because figures might be a Set
   [...figures].forEach(figureInfo => {
     if (!figureInfo.scene || !figureInfo.div) { return };
     const rect = figureInfo.div.getBoundingClientRect();
