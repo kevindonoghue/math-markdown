@@ -39,10 +39,7 @@ function App() {
         <Cube center={[0, 0, 0.3]} sideLength={0.1} />
       </Figure>
       <Figure>
-        <Cube />
-        <Cube />
-        <Cube />
-        <Cube />
+        <AnimatedCube />
       </Figure>
       <Figure>
         <Cube />

@@ -15,7 +15,9 @@ the renderer used by all 3d graphics. figures is a list of the figureInfo object
 from each Figure descendant. The figureInfo objects are added to figures in the
 body of the Figure function via a RenderContext. figuresInView is a list of the
 divs of the Figures that are animated. It is used by observer, an IntersectionObserver
-that is used to start and stop rendering when an animated Figure enters the view.
+that is used to start and stop rendering when an a Figure enters the view, and also
+to loop the rendering while an animated Figre is in the view.
+
 nextFrame is a function that renders the next function. It is passed down to the
 Figure level through the renderInfo object and the RenderContext. It is also called
 by the callback function of observer. The styling on the div is crucial for the 3d
@@ -26,8 +28,8 @@ function Render(props) {
   const canvas = initializeCanvas();
   const renderer = initializeRenderer(canvas);
   const figures = [];
-  const figuresInView = [];
-  const nextFrame = () => nextFrameFunction(renderInfo.figures, renderer);
+  const figuresInView = new Set();
+  const nextFrame = () => nextFrameFunction(figuresInView, renderer);
   const observer = initializeObserver(nextFrame, figuresInView);
   const renderInfo = { figures, renderer, nextFrame, observer }
 
@@ -84,21 +86,35 @@ function initializeCanvas() {
 /* Creates the observer in Render */
 function initializeObserver(renderFunction, figuresInView) {
 
+  // loop the render if there are any animated figures present in the view
   function handleRender() {
     renderFunction();
-    if (figuresInView.length > 0) {
+    if ([...figuresInView].some(x => x.animationFunctions.length > 0)) {
       requestAnimationFrame(handleRender);
     }
   }
 
+  // keep track of which figures are in the current window, and if there are any, render them
   function handleIntersection(entries) {
-    figuresInView.length = 0;
-    figuresInView.push(...entries.filter(entry => entry.isIntersecting));
-    console.log(figuresInView);
-    handleRender();
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        figuresInView.add(entry.target.figureInfo);
+      } else {
+        figuresInView.delete(entry.target.figureInfo);
+      }
+    })
+    if (figuresInView.size > 0) {
+      handleRender();
+    }
   }
 
-  return new IntersectionObserver(handleIntersection, {threshold: [0, 0.1, 0.9, 1]});
+  /*
+  If threshold is left at the default value of 0 there is a big when an
+  animated Figure leaves the view at the same time as another enters.
+  This is the reason for the extra threshold values.
+  */
+  return new IntersectionObserver(handleIntersection, {threshold: [0, 1]});
+  // return new IntersectionObserver(handleIntersection, {threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]});
 }
 
 // updates the animations for each Figure and renders the next frame for each Figure (see extremely helpful post by gman here https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
@@ -113,7 +129,7 @@ function nextFrameFunction(figures, renderer) {
   renderer.setClearColor(0xffffff);
   renderer.setScissorTest(true);
 
-  figures.forEach(figureInfo => {
+  [...figures].forEach(figureInfo => {
     if (!figureInfo.scene || !figureInfo.div) { return };
     const rect = figureInfo.div.getBoundingClientRect();
 

@@ -48,9 +48,8 @@ function Figure(props) {
 
     figureInfo.controls = controls;
     figureInfo.div = ref.current;
-    if (figureInfo.animationFunctions.length > 0) {
-      renderInfo.observer.observe(figureInfo.div);
-    }
+    figureInfo.div.figureInfo = figureInfo; // for the purposes of determining figureInView in Render, need to allow the div to reference the figureInfo object
+    renderInfo.observer.observe(figureInfo.div);
 
   }, [ref, figureInfo, renderInfo]);
 

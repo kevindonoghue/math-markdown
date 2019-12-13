@@ -3,6 +3,8 @@ const webpack = require("webpack");
 const remarkMath = require("remark-math");
 const rehypeKatex = require("rehype-katex");
 
+
+// LaTeX macros go here
 const LATEX_MACROS = {
   "\\bpm": "\\begin{pmatrix}",
   "\\epm": "\\end{pmatrix}",
