@@ -1,0 +1,35 @@
+{
+  "name": "mdx-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
+    "@mdx-js/loader": "^1.5.1",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.3.0",
+    "rehype-katex": "^2.0.0",
+    "remark-math": "^2.0.0",
+    "style-loader": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rehype": "^9.0.1",
+    "three": "^0.111.0",
+    "three-orbit-controls": "^82.1.0"
+  }
+}
