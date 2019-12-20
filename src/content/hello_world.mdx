@@ -1,21 +1,35 @@
-import Figure from '../components/Figure';
-import Axes3d from '../components/Axes3d';
-import Cube from '../components/Cube';
-import AnimatedCube from '../components/AnimatedCube';
+import Figure from "../components/Figure";
+import Axes3d from "../components/Axes3d";
+import Axes2d from '../components/Axes2d';
+import Cube from "../components/Cube";
+import AnimatedCube from "../components/AnimatedCube";
 
 # Hello, world!
 
 Even if it is cloudy out now, it is still good to see you, world.
 
-<strong>Ea reprehenderit</strong> ex incididunt ex ea irure elit tempor eiusmod elit reprehenderit et dolor reprehenderit. Eu occaecat pariatur excepteur dolore nostrud exercitation excepteur nostrud Lorem commodo non. Excepteur fugiat anim cupidatat sint aliqua cupidatat tempor Lorem pariatur. Do ad do labore magna. Aute et ex esse excepteur mollit ad est enim ea magna.
+<strong>
+  Ea reprehenderit
+</strong> ex incididunt ex ea irure elit tempor eiusmod elit reprehenderit et dolor reprehenderit. Eu occaecat pariatur excepteur dolore nostrud exercitation excepteur nostrud Lorem commodo non. Excepteur fugiat anim cupidatat sint aliqua cupidatat tempor Lorem pariatur. Do ad do labore magna. Aute et ex esse excepteur mollit ad est enim ea magna.
 
 Velit quis reprehenderit voluptate incididunt et pariatur aliquip. Voluptate nulla dolor quis pariatur proident elit pariatur officia. Ullamco fugiat amet eu duis ipsum. Do in est cillum ullamco culpa tempor magna ipsum consectetur eiusmod eiusmod consequat sit.
 
 Voluptate incididunt occaecat aliquip non eiusmod irure sint. Commodo ex est eiusmod veniam. Esse aute elit pariatur eiusmod. Fugiat nulla excepteur sit Lorem dolor dolore adipisicing irure et. Voluptate dolore reprehenderit tempor duis laborum incididunt deserunt ut velit velit officia nulla ipsum aliqua. Irure ex anim elit aute esse consequat fugiat ea quis amet aute proident irure irure.
 
-<Figure>
-  <Axes3d bounds={[[-3, 3], [-3, 3], [-3, 3]]} />
-  {[[1, 2, 1], [-1, -1, 0]].map((center, i) => <AnimatedCube key={i} center={center} />)}
+<Figure dim={3}>
+  <Axes3d
+    bounds={[
+      [-3, 3],
+      [-3, 3],
+      [-3, 3]
+    ]}
+  />
+  {[
+    [1, 2, 1],
+    [-1, -1, 0]
+  ].map((center, i) => (
+    <AnimatedCube key={i} center={center} />
+  ))}
 </Figure>
 
 Deserunt commodo cillum non veniam consequat ut commodo in esse sunt. Veniam id officia esse commodo officia veniam pariatur. Ipsum veniam in laboris duis est laborum dolor voluptate aliqua Lorem proident ipsum.
@@ -24,9 +38,27 @@ Minim id voluptate officia <strong>aute ea</strong>. Nisi magna occaecat aliquip
 
 Sint ad ut cillum occaecat reprehenderit non id. Reprehenderit fugiat aute ex veniam quis irure amet aliqua minim. Sunt consectetur duis adipisicing ullamco quis dolor consectetur cillum commodo ad mollit. Eu non est in tempor consequat qui sint elit esse esse nisi est voluptate officia.
 
+Eiusmod anim nulla cillum dolore minim non anim pariatur. Do eu eu Lorem mollit. Cupidatat excepteur id sunt tempor voluptate deserunt elit anim velit in non. Elit ut laborum culpa laboris adipisicing excepteur quis.
+
+Nulla est occaecat consectetur et adipisicing nostrud nisi magna culpa sint sunt. Lorem dolor culpa deserunt labore occaecat minim sint. Ipsum anim incididunt do excepteur. Officia anim nisi fugiat sint elit cupidatat do. Dolor voluptate ullamco qui ea amet nostrud mollit quis esse culpa. Proident magna exercitation sunt nisi ea magna id adipisicing exercitation non nostrud aliqua. Veniam sint sit commodo irure et do ea sit minim.
+
+Ut labore aute aute est occaecat. Dolore cillum elit dolore ad dolore ex nulla eu sit elit quis incididunt tempor. Do elit nostrud ullamco eiusmod id. Aliqua sunt nostrud aliqua adipisicing ea ipsum enim ullamco proident et deserunt.
+
+Anim quis elit est labore sint labore nostrud non. Culpa adipisicing qui mollit sint incididunt officia. Cupidatat sint incididunt quis enim in pariatur ut. Ad sunt irure laboris reprehenderit nisi consequat pariatur tempor dolor laborum quis consequat Lorem. Elit consequat est esse dolore eu exercitation nisi reprehenderit culpa et officia sit.
+
+Tempor anim reprehenderit enim laboris est ut. Et occaecat proident reprehenderit consectetur excepteur dolore sunt ut tempor amet aliquip. Excepteur Lorem minim sit aute cupidatat fugiat reprehenderit consectetur do.
+
+Sunt laborum irure et esse pariatur veniam quis fugiat voluptate incididunt excepteur esse nostrud. Commodo excepteur minim ea non. Ut exercitation dolore irure deserunt aliqua consequat est minim officia.
+
+Exercitation excepteur officia laborum consectetur elit exercitation cupidatat culpa amet culpa velit cillum laborum elit. Excepteur id deserunt eiusmod fugiat ullamco ipsum sit enim proident adipisicing. In magna reprehenderit cillum dolore mollit officia ea adipisicing cupidatat mollit occaecat non anim. Velit ea eiusmod magna aliquip amet culpa ipsum fugiat pariatur. Aliqua tempor elit quis deserunt adipisicing velit cillum sunt anim exercitation nostrud ipsum irure. Deserunt ea sint occaecat minim duis incididunt.
+
 Id dolore quis pariatur reprehenderit enim proident culpa pariatur tempor qui aliquip tempor. Ex enim aliqua amet est minim pariatur. Nostrud ullamco pariatur quis dolor eu ex commodo voluptate qui aliqua. Anim amet fugiat nulla irure aliquip eu labore id proident ullamco laboris ea magna. Tempor ut eu in mollit laboris et sunt voluptate duis. Reprehenderit officia nulla aute proident. Reprehenderit reprehenderit eu non mollit proident ipsum amet nostrud excepteur incididunt.
 
 Do sint qui aliquip non sunt ad excepteur ullamco. Esse dolore aute mollit et nulla non voluptate deserunt fugiat. Ea ex quis est ex. Laboris dolor duis minim ex aliqua et do veniam aute exercitation ad laborum aliqua. Nisi dolor nulla Lorem dolor incididunt deserunt. Qui cupidatat enim commodo reprehenderit. Sint fugiat anim occaecat eu magna incididunt.
+
+<Figure>
+  <Axes2d tickSpacing={[0.25, 0.25]} />
+</Figure>
 
 Ipsum sit sint et occaecat sunt ullamco sit excepteur aliqua excepteur aliquip ipsum sit. Velit culpa ex id occaecat duis ad dolore occaecat et. Ut minim cillum enim minim nisi id. Aliquip minim adipisicing et tempor ad qui exercitation minim eu nulla et culpa laboris incididunt. Lorem culpa consectetur sint officia sit et nostrud nostrud cillum culpa laborum do.
 
@@ -34,15 +66,46 @@ Nulla anim laborum laborum Lorem Lorem velit exercitation et duis velit sunt sit
 
 Proident anim enim ex duis. Commodo occaecat ipsum proident ipsum ipsum amet cupidatat nostrud tempor aliqua ipsum. Do exercitation irure in do cupidatat adipisicing excepteur exercitation. Magna aliquip nulla sit sit officia amet elit ipsum. Ad elit aliquip est in Lorem ad. Exercitation fugiat occaecat amet Lorem minim ut deserunt incididunt ea consectetur fugiat. Eu et do labore pariatur qui minim.
 
+Here is a list:
+
+1. item 1
+
+2. item 2
+
+3. item 3
+
 Esse enim adipisicing voluptate Lorem proident pariatur. Ut adipisicing ullamco mollit cillum. Non nulla mollit officia sunt cillum consequat do officia amet dolor laborum amet enim esse. Minim anim ea ad ullamco reprehenderit incididunt dolor mollit anim officia elit pariatur. Ut tempor tempor exercitation nulla occaecat officia do.
 
 Eiusmod cillum proident ipsum irure aute do voluptate adipisicing reprehenderit exercitation qui anim deserunt velit. Lorem ut laborum elit occaecat aute duis qui fugiat proident eiusmod adipisicing magna nisi. Ullamco dolor officia pariatur labore ea non labore. Labore enim aute ea do id velit aliquip enim anim ut in. Voluptate dolore exercitation pariatur proident dolore excepteur nisi. Ipsum incididunt enim et eu officia ullamco non sunt anim ex.
+
+Here is a table:
+
+| A | B | C |
+| - | - | - |
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
+
 
 Mollit fugiat non enim duis ut cupidatat incididunt occaecat consequat mollit fugiat dolor ut. Quis culpa officia commodo ad cupidatat nostrud fugiat et eu esse. Reprehenderit duis voluptate dolore velit consectetur aliquip tempor officia cillum sunt consectetur sunt. Voluptate exercitation officia nisi nostrud id. Commodo aliquip esse sint amet.
 
 Enim commodo est in duis. Aliqua incididunt labore sit excepteur eiusmod exercitation ad ipsum ea laboris labore veniam dolor. Aliqua qui enim eiusmod culpa aute velit exercitation culpa esse. Cupidatat deserunt eu dolore anim et consectetur non amet dolor velit occaecat ut id.
 
+A quote:
+
+> Occaecat ea proident consectetur exercitation nulla dolor exercitation id laboris cillum.
+
+
 Ea aliquip anim in Lorem et nisi aliqua in velit. Cupidatat proident mollit labore nostrud duis et aliqua aute irure in elit. Anim velit enim ea sit laborum ut cillum pariatur velit ea. Proident nulla qui consequat dolore. Veniam Lorem eiusmod veniam est proident et quis. Incididunt veniam anim quis aliqua.
+
+Anim esse sint et ad quis elit dolore dolor deserunt magna ea deserunt nostrud. Sunt dolore excepteur amet incididunt ex id aliqua deserunt. Ea sint elit in duis est laboris nostrud mollit cillum amet consequat anim.
+
+Cillum do ad dolor nulla deserunt enim. Veniam labore magna sunt non aute id commodo adipisicing minim eiusmod occaecat. Sit laboris deserunt tempor dolor irure elit pariatur. Velit irure aliqua aliquip irure anim. Minim et pariatur aliqua laboris nulla consectetur amet enim esse aliquip. Culpa exercitation cillum proident dolore ut fugiat proident quis. Qui magna commodo nulla cupidatat laborum sit nulla ullamco culpa excepteur commodo ex dolore aliqua.
+
+---
+
+Cillum esse pariatur anim sint sint Lorem qui. Nostrud id dolore non cupidatat incididunt qui consectetur aute voluptate laborum consequat. Exercitation proident magna exercitation ipsum officia. Pariatur esse esse officia cillum quis proident minim. Velit officia deserunt ad enim. Ad et nisi do est duis voluptate irure sit velit eiusmod do aute labore. Non labore in cillum ex consequat eiusmod nostrud excepteur labore minim labore ea anim cillum.
+
+Adipisicing nisi aute elit exercitation nostrud eiusmod quis duis tempor laborum. Eiusmod ipsum pariatur eiusmod pariatur nisi exercitation cillum eu. Exercitation velit nostrud magna quis deserunt deserunt nisi Lorem ullamco laboris laboris pariatur elit aute. Nulla reprehenderit ea ipsum exercitation fugiat est. Enim elit et sint fugiat commodo reprehenderit aute. Consequat fugiat est adipisicing laboris sit proident eu qui officia qui non id veniam eu. Reprehenderit aute est veniam fugiat elit excepteur consectetur.
 
 
 blah blah $3^2 + 4^2 = 5^2$.
@@ -59,8 +122,6 @@ $$
 x + y = z \\
 y = z + w
 $$
-
-
 
 $$
 \bpm 1 & 1 \\ 0 & 1 \epm

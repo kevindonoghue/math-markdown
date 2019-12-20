@@ -6,7 +6,7 @@ function Cube(props) {
   const figureInfo = useContext(FigureContext)
   let { sideLength, center, color } = props;
 
-  const geometry = new THREE.BoxGeometry(sideLength, sideLength, sideLength);
+  const geometry = new THREE.BoxBufferGeometry(sideLength, sideLength, sideLength);
   const material = new THREE.MeshLambertMaterial({ color: color });
   const cube = new THREE.Mesh(geometry, material);
   cube.position.set(...center);

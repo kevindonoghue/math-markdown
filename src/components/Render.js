@@ -2,6 +2,8 @@ import React from "react";
 import * as THREE from "three";
 
 
+const contentWidth = 800;
+
 // context passed down to Figures
 const RenderContext = React.createContext();
 
@@ -33,28 +35,38 @@ function Render(props) {
   const observer = initializeObserver(nextFrame, figuresInView);
   const renderInfo = { figures, renderer, nextFrame, observer }
 
+  nextFrame();
+
   return (
     <div style={{
+      margin: '0 auto',
+    }}>
+      <div style={{
       position: "absolute",
       top: 0,
-      width: "100%",
+      left: '50%',
+      marginLeft: -contentWidth/2,
+      // width: "100%",
+      width: contentWidth,
       zIndex: 1,
     }}>
       <RenderContext.Provider value={renderInfo}>
         {props.children}
       </RenderContext.Provider>
     </div>
+    </div>
+    
   );
 }
 
 /* Creates the renderer in Render */
 function initializeRenderer(canvas) {
-  const renderer = new THREE.WebGLRenderer({
+  const renderer =  new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: true,
+    antialias: true, // set to false for better performance
     alpha: true
   });
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(window.devicePixelRatio); // window.devicePixelRatio/2 to render in half resolution
 
   renderer.updateSize = () => {
     const width = renderer.domElement.clientWidth;
@@ -75,7 +87,8 @@ function initializeCanvas() {
   const canvas = document.createElement("canvas");
   canvas.style.position = "absolute";
   canvas.style.left = "0px";
-  canvas.style.width = "100%";
+  // canvas.style.width = "100%";
+  canvas.style.width = `${contentWidth}`;
   canvas.style.height = "100%";
   canvas.style.zIndex = -1;
   canvas.id = "main-canvas";
@@ -96,6 +109,7 @@ function initializeObserver(renderFunction, figuresInView) {
 
   // keep track of which figures are in the current window, and if there are any, render them
   function handleIntersection(entries) {
+    const existsFiguresInitiallyInView = figuresInView.size > 0;
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         figuresInView.add(entry.target.figureInfo);
@@ -103,6 +117,16 @@ function initializeObserver(renderFunction, figuresInView) {
         figuresInView.delete(entry.target.figureInfo);
       }
     })
+    const existsFiguresNowInView = figuresInView.size > 0;
+
+    if (!existsFiguresInitiallyInView && existsFiguresNowInView) {
+      window.addEventListener("resize", renderFunction);
+      window.addEventListener("scroll", renderFunction);
+    } else if (existsFiguresInitiallyInView && !existsFiguresNowInView) {
+      window.removeEventListener('resize', renderFunction);
+      window.removeEventListener('scroll', renderFunction);
+    }
+
     if (figuresInView.size > 0) {
       handleRender();
     }

@@ -24,11 +24,15 @@ if animationFunctions.length > 0 and so if this is the case, the div for the Fig
 is targeted by the observer passed down from Render.
 
 The div can be styled via props.style.
+
+Let props.dim be 2 or 3, depending on whether the figure is 2 or 3-dimensional. This
+will change the camera and controls.
 */
 function Figure(props) {
+  const { dim, width, height } = props;
   const ref = useRef(null);
   const figureInfo = {
-    ...initializeScene(props.width, props.height),
+    ...initializeScene(dim, width, height),
     animationFunctions: [],
     scale: 1
   };
@@ -37,16 +41,15 @@ function Figure(props) {
   renderInfo.figures.push(figureInfo);
 
   useEffect(() => {
-    ref.current.style.width = `${props.width}px`;
-    ref.current.style.height = `${props.height}px`;
+    ref.current.style.width = `${width}px`;
+    ref.current.style.height = `${height}px`;
+    
+    if (dim === 3) {
+      let controls = new OrbitControls(figureInfo.camera, ref.current);
+      controls.addEventListener("change", renderInfo.nextFrame);
+      figureInfo.controls = controls;
+    }
 
-    let controls = new OrbitControls(figureInfo.camera, ref.current);
-
-    controls.addEventListener("change", renderInfo.nextFrame);
-    window.addEventListener("resize", renderInfo.nextFrame);
-    window.addEventListener("scroll", renderInfo.nextFrame);
-
-    figureInfo.controls = controls;
     figureInfo.div = ref.current;
     figureInfo.div.figureInfo = figureInfo; // for the purposes of determining figureInView in Render, need to allow the div to reference the figureInfo object
     renderInfo.observer.observe(figureInfo.div);
@@ -70,13 +73,14 @@ function Figure(props) {
 }
 
 Figure.defaultProps = {
+  dim: 2,
   width: 400,
   height: 400
 };
 
 /* Creates the scene and camera in Figure */
-function initializeScene(width, height) {
-  const cameraPosition = [1.2, 1.3, 1.4];
+function initializeScene(dim, width, height) {
+  const cameraPosition = (dim === 3) ? [1.2, 1.3, 1.4] : [0, 0, 2];
   const fov = 60;
   const camera = new THREE.PerspectiveCamera(fov, width / height, 0.01, 1000);
   camera.position.set(...cameraPosition);

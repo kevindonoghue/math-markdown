@@ -2,8 +2,6 @@ import { useContext } from "react";
 import * as THREE from "three";
 import { FigureContext } from "./Figure";
 
-
-
 /*
 Creates 3d axes with upper and lower x, y, z bounds specified by the
 triple of pairs prop.bounds.
@@ -19,7 +17,7 @@ function Axes3d(props) {
   if (tickSpacing) {
     ticks = initializeTicks(bounds, scale, tickSpacing);
   }
-  
+
   const meshes = [...axes, ...arrows, ...ticks];
   meshes.forEach(mesh => figureInfo.scene.add(mesh));
   figureInfo.scale = scale;
@@ -40,8 +38,8 @@ Axes3d.defaultProps = {
 
 /* Creates the lines of the axes */
 function initializeAxes(bounds, scale) {
-  const axisRadius = scale*0.005;
-  
+  const axisRadius = scale * 0.005;
+
   const xAxisGeometry = new THREE.CylinderBufferGeometry(
     axisRadius,
     axisRadius,
@@ -72,12 +70,15 @@ function initializeAxes(bounds, scale) {
   return [xAxisMesh, yAxisMesh, zAxisMesh];
 }
 
-
 /* Creates the arrows of the axes */
 function initializeArrows(bounds, scale) {
-  const arrowRadius = scale*0.025;
-  const arrowHeight = scale*0.075;
-  const arrowGeometry = new THREE.ConeBufferGeometry(arrowRadius, arrowHeight, 8);
+  const arrowRadius = scale * 0.025;
+  const arrowHeight = scale * 0.075;
+  const arrowGeometry = new THREE.ConeBufferGeometry(
+    arrowRadius,
+    arrowHeight,
+    8
+  );
   const material = new THREE.MeshBasicMaterial({ color: "black" });
 
   const arrows = [
@@ -96,55 +97,58 @@ function initializeArrows(bounds, scale) {
   return arrows;
 }
 
-
 /* Creates the ticks of the axes */
 function initializeTicks(bounds, scale, tickSpacing) {
-  const tickThickness = scale*0.0001;
-  const tickRadius = scale*0.025;
-  const tickGeometry = new THREE.CylinderBufferGeometry(tickRadius, tickRadius, tickThickness, 8);
-  const material = new THREE.MeshBasicMaterial({color: 'black'});
+  const tickThickness = scale * 0.0001;
+  const tickRadius = scale * 0.025;
+  const tickGeometry = new THREE.CylinderBufferGeometry(
+    tickRadius,
+    tickRadius,
+    tickThickness,
+    8
+  );
+  const material = new THREE.MeshBasicMaterial({ color: "black" });
 
   const ticks = [];
 
-  for (let i=0; i<3; i+=1) {
+  for (let i = 0; i < 3; i += 1) {
     let j;
 
     j = 1;
-    while (-j*tickSpacing>bounds[i][0]) {
+    while (-j * tickSpacing[i] > bounds[i][0]) {
       let tick = new THREE.Mesh(tickGeometry, material);
-      if (i==0) {
-        tick.position.set(-j*tickSpacing, 0, 0);
-        tick.rotateZ(Math.PI/2);
+      if (i == 0) {
+        tick.position.set(-j * tickSpacing, 0, 0);
+        tick.rotateZ(Math.PI / 2);
       }
-      if (i==1) {
-        tick.position.set(0, -j*tickSpacing, 0);
+      if (i == 1) {
+        tick.position.set(0, -j * tickSpacing, 0);
       }
-      if (i==2) {
-        tick.position.set(0, 0, -j*tickSpacing);
-        tick.rotateX(Math.PI/2);
+      if (i == 2) {
+        tick.position.set(0, 0, -j * tickSpacing);
+        tick.rotateX(Math.PI / 2);
       }
-      j += 1
+      j += 1;
       ticks.push(tick);
     }
 
     j = 1;
-    while (j*tickSpacing<bounds[i][1]) {
+    while (j * tickSpacing[i] < bounds[i][1]) {
       let tick = new THREE.Mesh(tickGeometry, material);
-      if (i==0) {
-        tick.position.set(j*tickSpacing, 0, 0);
-        tick.rotateZ(Math.PI/2);
+      if (i == 0) {
+        tick.position.set(j * tickSpacing, 0, 0);
+        tick.rotateZ(Math.PI / 2);
       }
-      if (i==1) {
-        tick.position.set(0, j*tickSpacing, 0);
+      if (i == 1) {
+        tick.position.set(0, j * tickSpacing, 0);
       }
-      if (i==2) {
-        tick.position.set(0, 0, j*tickSpacing);
-        tick.rotateX(Math.PI/2);
+      if (i == 2) {
+        tick.position.set(0, 0, j * tickSpacing);
+        tick.rotateX(Math.PI / 2);
       }
-      j += 1
+      j += 1;
       ticks.push(tick);
     }
-
   }
 
   return ticks;
