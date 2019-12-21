@@ -3,10 +3,11 @@ import * as THREE from "three";
 import Stats from "stats.js";
 
 const stats = new Stats();
-// stats.showPanel(0);
-// document.body.appendChild(stats.dom);
+stats.showPanel(0);
+document.body.appendChild(stats.dom);
 
 const contentWidth = 800;
+document.body.style.minWidth = `${contentWidth/2}px`;
 
 // context passed down to Figures
 const RenderContext = React.createContext();
@@ -47,7 +48,7 @@ function Render(props) {
   renderInfo.animate = animate;
 
   window.addEventListener("resize", () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(Math.min(window.innerWidth, contentWidth), window.innerHeight);
     animate(renderInfo, true);
   });
 
@@ -83,21 +84,23 @@ function initializeRenderer(canvas) {
     alpha: true
   });
   renderer.setPixelRatio(window.devicePixelRatio); // window.devicePixelRatio/2 to render in half resolution
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(Math.min(window.innerWidth, contentWidth), window.innerHeight);
 
   return renderer;
 }
 
 /* Creates the canvas in Render */
 function initializeCanvas() {
+
   const canvas = document.createElement("canvas");
   canvas.style.position = "absolute";
-  canvas.style.left = "0px";
-  canvas.style.width = "100%";
+  canvas.style.left = "50%";
+  canvas.style.marginLeft = `${-contentWidth/2}px`;
+  canvas.style.width = contentWidth;
   canvas.style.height = "100%";
   canvas.style.zIndex = -1;
   canvas.id = "main-canvas";
-  document.querySelector("body").appendChild(canvas);
+  document.querySelector('body').appendChild(canvas);
   return canvas;
 }
 
@@ -135,9 +138,6 @@ function initializeObserver(renderInfo) {
 function animate(renderInfo, renderOnce) {
   stats.begin();
   const { renderer, figuresInView } = renderInfo;
-  if (figuresInView.size === 0) {
-    return;
-  }
 
   renderer.domElement.style.transform = `translateY(${window.scrollY}px)`;
 
@@ -148,31 +148,21 @@ function animate(renderInfo, renderOnce) {
   renderer.setClearColor(0xffffff);
   renderer.setScissorTest(true);
 
-  // need to call ... here because figures might be a Set
-  [...figuresInView].forEach(figureInfo => {
+  figuresInView.forEach(figureInfo => {
     if (!figureInfo.scene || !figureInfo.div) {
       return;
     }
     const rect = figureInfo.div.getBoundingClientRect();
 
-    if (
-      rect.bottom < 0 ||
-      rect.top > renderer.domElement.clientHeight ||
-      rect.right < 0 ||
-      rect.left > renderer.domElement.clientWidth
-    ) {
-      return; // if the scene is outside the viewing area, don't bother rendering it
-    }
 
     // get location of the plot on the window
     const width = rect.right - rect.left;
     const height = rect.bottom - rect.top;
-    const left = rect.left;
     const bottom = renderer.domElement.clientHeight - rect.bottom;
 
     // render only in that part of the window
-    renderer.setViewport(left, bottom, width, height);
-    renderer.setScissor(left, bottom, width, height);
+    renderer.setViewport(contentWidth/2-width/2, bottom, width, height);
+    renderer.setScissor(contentWidth/2-width/2, bottom, width, height);
 
     let now = new Date();
     figureInfo.animationFunctions.forEach(f => f((now - startTime) / 1000));

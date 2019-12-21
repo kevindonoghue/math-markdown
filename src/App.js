@@ -7,6 +7,7 @@ import Axes3d from "./components/Axes3d";
 import Axes2d from './components/Axes2d';
 import * as THREE from "three";
 import HelloWorld from "./content/hello_world";
+import Text3d from './components/Text3d';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           ]}
           tickSpacing={0.5}
         />
+        <Text3d />
         <AnimatedCube center={[0.5, 0.25, 0.1]} sideLength={0.3} />
         <Cube center={[0, 0, 0.3]} sideLength={0.1} />
       </Figure>
