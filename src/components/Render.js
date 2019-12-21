@@ -1,6 +1,10 @@
 import React from "react";
 import * as THREE from "three";
+import Stats from "stats.js";
 
+const stats = new Stats();
+// stats.showPanel(0);
+// document.body.appendChild(stats.dom);
 
 const contentWidth = 800;
 
@@ -31,53 +35,55 @@ function Render(props) {
   const renderer = initializeRenderer(canvas);
   const figures = [];
   const figuresInView = new Set();
-  const nextFrame = () => nextFrameFunction(figuresInView, renderer);
-  const observer = initializeObserver(nextFrame, figuresInView);
-  const renderInfo = { figures, renderer, nextFrame, observer }
+  const activeAnimationFrames = new Set();
+  const renderInfo = {
+    figures,
+    renderer,
+    figuresInView,
+    activeAnimationFrames
+  };
+  const observer = initializeObserver(renderInfo);
+  renderInfo.observer = observer;
+  renderInfo.animate = animate;
 
-  nextFrame();
+  window.addEventListener("resize", () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    animate(renderInfo, true);
+  });
 
   return (
-    <div style={{
-      margin: '0 auto',
-    }}>
-      <div style={{
-      position: "absolute",
-      top: 0,
-      left: '50%',
-      marginLeft: -contentWidth/2,
-      // width: "100%",
-      width: contentWidth,
-      zIndex: 1,
-    }}>
-      <RenderContext.Provider value={renderInfo}>
-        {props.children}
-      </RenderContext.Provider>
+    <div
+      style={{
+        margin: "0 auto"
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          marginLeft: -contentWidth / 2,
+          width: contentWidth,
+          zIndex: 1
+        }}
+      >
+        <RenderContext.Provider value={renderInfo}>
+          {props.children}
+        </RenderContext.Provider>
+      </div>
     </div>
-    </div>
-    
   );
 }
 
 /* Creates the renderer in Render */
 function initializeRenderer(canvas) {
-  const renderer =  new THREE.WebGLRenderer({
+  const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true, // set to false for better performance
     alpha: true
   });
   renderer.setPixelRatio(window.devicePixelRatio); // window.devicePixelRatio/2 to render in half resolution
-
-  renderer.updateSize = () => {
-    const width = renderer.domElement.clientWidth;
-    const height = renderer.domElement.clientHeight;
-    if (
-      renderer.domElement.width !== width ||
-      renderer.domElement.height !== height
-    ) {
-      renderer.setSize(width, height, false);
-    }
-  };
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
   return renderer;
 }
@@ -87,8 +93,7 @@ function initializeCanvas() {
   const canvas = document.createElement("canvas");
   canvas.style.position = "absolute";
   canvas.style.left = "0px";
-  // canvas.style.width = "100%";
-  canvas.style.width = `${contentWidth}`;
+  canvas.style.width = "100%";
   canvas.style.height = "100%";
   canvas.style.zIndex = -1;
   canvas.id = "main-canvas";
@@ -97,38 +102,29 @@ function initializeCanvas() {
 }
 
 /* Creates the observer in Render */
-function initializeObserver(renderFunction, figuresInView) {
+function initializeObserver(renderInfo) {
+  const { figuresInView } = renderInfo;
 
-  // loop the render if there are any animated figures present in the view
-  function handleRender() {
-    renderFunction();
-    if ([...figuresInView].some(x => x.animationFunctions.length > 0)) {
-      requestAnimationFrame(handleRender);
-    }
+  function renderOnce() {
+    animate(renderInfo, true);
   }
 
-  // keep track of which figures are in the current window, and if there are any, render them
   function handleIntersection(entries) {
-    const existsFiguresInitiallyInView = figuresInView.size > 0;
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         figuresInView.add(entry.target.figureInfo);
       } else {
         figuresInView.delete(entry.target.figureInfo);
       }
-    })
-    const existsFiguresNowInView = figuresInView.size > 0;
-
-    if (!existsFiguresInitiallyInView && existsFiguresNowInView) {
-      window.addEventListener("resize", renderFunction);
-      window.addEventListener("scroll", renderFunction);
-    } else if (existsFiguresInitiallyInView && !existsFiguresNowInView) {
-      window.removeEventListener('resize', renderFunction);
-      window.removeEventListener('scroll', renderFunction);
-    }
+    });
 
     if (figuresInView.size > 0) {
-      handleRender();
+      cancelAnimationFrame(renderInfo.requestId);
+      animate(renderInfo);
+      window.removeEventListener("scroll", renderOnce);
+      window.addEventListener("scroll", renderOnce);
+    } else {
+      window.removeEventListener("scroll", renderOnce);
     }
   }
 
@@ -136,8 +132,13 @@ function initializeObserver(renderFunction, figuresInView) {
 }
 
 // updates the animations for each Figure and renders the next frame for each Figure (see extremely helpful post by gman here https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
-function nextFrameFunction(figures, renderer) {
-  renderer.updateSize();
+function animate(renderInfo, renderOnce) {
+  stats.begin();
+  const { renderer, figuresInView } = renderInfo;
+  if (figuresInView.size === 0) {
+    return;
+  }
+
   renderer.domElement.style.transform = `translateY(${window.scrollY}px)`;
 
   renderer.setClearColor(0xffffff);
@@ -148,8 +149,10 @@ function nextFrameFunction(figures, renderer) {
   renderer.setScissorTest(true);
 
   // need to call ... here because figures might be a Set
-  [...figures].forEach(figureInfo => {
-    if (!figureInfo.scene || !figureInfo.div) { return };
+  [...figuresInView].forEach(figureInfo => {
+    if (!figureInfo.scene || !figureInfo.div) {
+      return;
+    }
     const rect = figureInfo.div.getBoundingClientRect();
 
     if (
@@ -172,11 +175,18 @@ function nextFrameFunction(figures, renderer) {
     renderer.setScissor(left, bottom, width, height);
 
     let now = new Date();
-    figureInfo.animationFunctions.forEach(f => f((now - startTime)/1000));
+    figureInfo.animationFunctions.forEach(f => f((now - startTime) / 1000));
 
-    console.log("rendering");
     renderer.render(figureInfo.scene, figureInfo.camera);
   });
+  stats.end();
+
+  if (
+    !renderOnce &&
+    [...figuresInView].some(x => x.animationFunctions.length > 0)
+  ) {
+    renderInfo.requestId = requestAnimationFrame(() => animate(renderInfo));
+  }
 }
 
 export default Render;

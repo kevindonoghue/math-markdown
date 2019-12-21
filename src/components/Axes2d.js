@@ -112,7 +112,6 @@ function initializeTicks(bounds, scale, tickSpacing) {
       ticks.push(tick);
     }
   }
-  console.log(ticks);
 
   return ticks;
 }

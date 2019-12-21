@@ -46,7 +46,7 @@ function Figure(props) {
     
     if (dim === 3) {
       let controls = new OrbitControls(figureInfo.camera, ref.current);
-      controls.addEventListener("change", renderInfo.nextFrame);
+      controls.addEventListener("change", () => renderInfo.animate(renderInfo, true));
       figureInfo.controls = controls;
     }
 
