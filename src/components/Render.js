@@ -2,10 +2,13 @@ import React from "react";
 import * as THREE from "three";
 import Stats from "stats.js";
 
+
+// display framerate for debugging purposes
 const stats = new Stats();
 stats.showPanel(0);
 document.body.appendChild(stats.dom);
 
+// width of main content on page
 const contentWidth = 800;
 document.body.style.minWidth = `${contentWidth/2}px`;
 
@@ -21,13 +24,17 @@ canvas is a global canvas on which all 3d graphics are rendered. renderer is
 the renderer used by all 3d graphics. figures is a list of the figureInfo objects
 from each Figure descendant. The figureInfo objects are added to figures in the
 body of the Figure function via a RenderContext. figuresInView is a list of the
-divs of the Figures that are animated. It is used by observer, an IntersectionObserver
-that is used to start and stop rendering when an a Figure enters the view, and also
+divs of the Figures that in view in the window currently. It is used by observer, an IntersectionObserver
+that is used to start and stop the animate function when an a Figure enters the view, and also
 to loop the rendering while an animated Figre is in the view.
 
-nextFrame is a function that renders the next function. It is passed down to the
-Figure level through the renderInfo object and the RenderContext. It is also called
-by the callback function of observer. The styling on the div is crucial for the 3d
+animate is a function that animtes the graphics. It is called by the intersection observer
+callback function when a new figure enters the views. animate calls itself while there are still
+animated figures in view. While there are no animated figures in view, it is attached to an
+event handler for scrolling, and also for window resizing. It has to be passed to the controls
+of every THREE.Scene, so it has to be passed (via renderInfo) to each Figure child of Render.
+
+Render returns a div, and the styling on the div is crucial for the 3d
 rendering (see the css in the code snippet at
 https://stackoverflow.com/questions/30608723/is-it-possible-to-enable-unbounded-number-of-renderers-in-three-js/30633132#30633132)
 */
@@ -36,12 +43,10 @@ function Render(props) {
   const renderer = initializeRenderer(canvas);
   const figures = [];
   const figuresInView = new Set();
-  const activeAnimationFrames = new Set();
   const renderInfo = {
     figures,
     renderer,
     figuresInView,
-    activeAnimationFrames
   };
   const observer = initializeObserver(renderInfo);
   renderInfo.observer = observer;
@@ -154,7 +159,6 @@ function animate(renderInfo, renderOnce) {
     }
     const rect = figureInfo.div.getBoundingClientRect();
 
-
     // get location of the plot on the window
     const width = rect.right - rect.left;
     const height = rect.bottom - rect.top;
@@ -168,6 +172,7 @@ function animate(renderInfo, renderOnce) {
     figureInfo.animationFunctions.forEach(f => f((now - startTime) / 1000));
 
     renderer.render(figureInfo.scene, figureInfo.camera);
+    handleOverlays(figureInfo)
   });
   stats.end();
 
@@ -177,6 +182,20 @@ function animate(renderInfo, renderOnce) {
   ) {
     renderInfo.requestId = requestAnimationFrame(() => animate(renderInfo));
   }
+}
+
+function handleOverlays(figureInfo) {
+  figureInfo.overlays.forEach(obj => {
+    const proj = obj.position.clone().project(figureInfo.camera);
+    const localXCoord = (proj.x + 1) * figureInfo.width / 2;
+    const localYCoord = (-proj.y + 1) * figureInfo.height / 2
+    const rect = figureInfo.div.getBoundingClientRect();
+    const globalXCoord = rect.left + localXCoord;
+    const globalYCoord = rect.top + localYCoord;
+    obj.element.style.left = `${globalXCoord}px`;
+    obj.element.style.top = `${globalYCoord}px`;
+    obj.element.style.transform = `translateY(${window.scrollY}px)`
+  });
 }
 
 export default Render;

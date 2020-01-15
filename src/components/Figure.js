@@ -12,10 +12,9 @@ The children of Figure are to be used to add objects to this scene (for example,
 axes or graphs of functions). The children can do so via the figureInfo object,
 which is passed to descendants via the FigureContext. The controls reference
 the div which this function creates (referenced via ref) and so they need to be
-created in an effect which is triggered when ref changes. The nextFrame function,
-passed down from Render through the RenderContext, is attached to event listeners
-for 1) interacting with the scene via the controls, 2) scrolling the window, and
-3) resizing the window.
+created in an effect which is triggered when ref changes. The animate function,
+passed down from Render through the RenderContext, is attached to an event listener
+for interacting with the scene via the controls.
 
 figureInfo contains two other attributes: animationFunctions and scale.
 animationFunctions contains the functions passed to nextFrameFunction to progress
@@ -34,7 +33,10 @@ function Figure(props) {
   const figureInfo = {
     ...initializeScene(dim, width, height),
     animationFunctions: [],
-    scale: 1
+    scale: 1,
+    overlays: [],
+    width: width,
+    height: height,
   };
   const renderInfo = useContext(RenderContext);
 
@@ -46,8 +48,8 @@ function Figure(props) {
     
     if (dim === 3) {
       let controls = new OrbitControls(figureInfo.camera, ref.current);
-      controls.addEventListener("change", () => renderInfo.animate(renderInfo, true));
       figureInfo.controls = controls;
+      controls.addEventListener("change", () => renderInfo.animate(renderInfo, true));
     }
 
     figureInfo.div = ref.current;
