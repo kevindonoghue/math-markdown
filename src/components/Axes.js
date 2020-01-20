@@ -25,7 +25,7 @@ function Axes(props) {
     config = { displayModeBar: false };
   }
 
-  const axes = { data: [], layout: layout, config: config };
+  const axes = { dim: dim, data: [], layout: layout, config: config, bounds: bounds };
 
   if (dim === 3) {
     get3dAxes(bounds).forEach(x => axes.data.push(x));
@@ -34,7 +34,7 @@ function Axes(props) {
   return (
     <AxesContext.Provider value={axes}>
       {props.children}
-      <Plot data={axes.data} layout={axes.layout} config={axes.config} />
+      <Plot dim={dim} data={axes.data} layout={axes.layout} config={axes.config} />
     </AxesContext.Provider>
   );
 }
@@ -50,11 +50,14 @@ Axes.defaultProps = {
 
 function getDefault2dLayout(bounds) {
   return {
+    hovermode: false,
     xaxis: {
-      range: bounds[0]
+      range: bounds[0],
+      fixedrange: true,
     },
     yaxis: {
-      range: bounds[1]
+      range: bounds[1],
+      fixedrange: true,
     },
     showlegend: false
   };
@@ -72,7 +75,9 @@ function getDefault3dLayout(bounds) {
   };
 
   return {
+    hovermode: false,
     scene: {
+      hovertemplate: null,
       xaxis: {
         ...emptyAxisSettings,
         range: [
