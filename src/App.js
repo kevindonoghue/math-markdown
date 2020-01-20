@@ -1,15 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import Render from "./components/Render";
-import Figure from "./components/Figure";
-import Cube from "./components/Cube";
-import AnimatedCube from "./components/AnimatedCube";
-import Axes3d from "./components/Axes3d";
-import Axes2d from './components/Axes2d';
-import * as THREE from "three";
-import HelloWorld from "./content/hello_world";
-import Text3d from './components/Text3d';
-import KaTeX from './components/KaTeX';
-import Plot from './components/Plot';
+import React from "react";
+import Axes from './components/Axes';
 import TestObject from './components/TestObject'
 
 // function App() {
@@ -87,9 +77,9 @@ function App() {
   
   return (
     <div>
-      <Plot dim={3} bounds={[[-2, 5], [-2, 5], [-2, 5]]} >
+      <Axes dim={3} bounds={[[-2, 5], [-2, 5], [-2, 5]]} >
         <TestObject />
-      </Plot>
+      </Axes>
     </div>
   );
 }

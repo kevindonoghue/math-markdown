@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { PlotContext } from './Plot';
+import { AxesContext } from './Axes';
 
 function TestObject(props) {
-  const plot = useContext(PlotContext);
+  const axes = useContext(AxesContext);
   const trace = {
     type: 'scatter3d',
     mode: 'lines',
@@ -15,7 +15,7 @@ function TestObject(props) {
     },
     hoverinfo: 'none',
   }
-  plot.data.push(trace);
+  axes.data.push(trace);
   return null;
 }
 
