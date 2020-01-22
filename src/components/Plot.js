@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import DefaultPlot from 'react-plotly.js';
+import PlotlyPlot from 'react-plotly.js';
 
 
 // wraps the Plot component from react-plotly.js with an observer that triggers a rerender if the plot is in view but its WebGL context has been lost
@@ -28,7 +28,7 @@ function Plot(props) {
 
   return (
     <div ref={ref}>
-      <DefaultPlot
+      <PlotlyPlot
         key={key} // the observer callback function increments this key, thus causing a rerender
         data={data}
         layout={layout}

@@ -1,0 +1,79 @@
+import Axes from '../components/Axes';
+import Point from '../components/Point';
+import ZeroSet from '../components/ZeroSet';
+
+# Linear Algebra
+
+## What is Linear Algebra?
+Linear algebra is the study of mathematical objects that you can add:
+$$a+b$$
+and that you can multiply by numbers
+$$5a.$$
+A vector space is a set where you can add elements of the set together and where you can multiply any element in the set by a number.
+
+For example, the set of pairs of numbers (things like $(-1, 0)$ or $(5, 7)$ or $(1.5, 2.5)$, $(3, 5)$ etc) form a vector space:
+- you can add any two of them together: $(-1, 0) + (5, 7) = (4, 7)$
+- you can multiply any of them by a number: $0.5\cdot(3, 5) = (1.5, 2.5)$.
+
+For example, the set of triples of numbers (things like $(-1, 0, 0)$ or $(3, 2, 1)$ or $(-2.4, 1.6, 0)$) form a vector space:
+- you can add any two of them together: $(-1, 0, 0) + (3, 2, 1) = (2, 2, 1)$
+- you can multiply any of them by a number: $2\cdot(3, 2, 1) = (6, 4, 2)$
+
+Similarly for quadruples of numbers, quintuples of numbers, $n$-tuples of numbers.
+
+The set of pairs of numbers is called $\bbR^2$. The set of triples of numbers is called $\bbR^3$. The set of $n$-tuples of numbers is called $\bbR^n$. There are more vector spaces than these, but it is helpful to just focus on these vector spaces first.
+
+There are two other vector spaces not mentioned thus far, but that are important. First, the set of numbers themselves, $\bbR$ forms a vector space. And the set containing only zero, $\{0\}$, is a vector space.
+
+## Linear Systems of Equations
+In practice, most problems in linear algebra reduce to solving systems of linear equations. This is a linear equation in two variables:
+$$x + 2y = 3$$
+It is linear because it can be written as a sum of numbers times the variables. There are no powers bigger than 1 ($x^2$) or funky functions ($\sin(x)$) lying around. If this definition seems unsatisfying and unintuitive, that's ok. We'll revisit it in the future.
+
+The set of solutions to the equation $x + 2y = 3$ is the set of pairs of numbers $(x, y)$ such that $x + 2y = 3$. For example, $(1, 1)$ is a solution, as is $(3, 0)$.
+
+The set of pairs of numbers can be plotted on the cartesian axis:
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <Point location={[1, 1]} />
+  <Point location={[3, 0]} />
+</Axes>
+
+Pictured above are two solutions to the equation $x + 2y = 3$. If you plot enough solutions, you see that they form a line:
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <Point location={[1, 1]} />
+  <Point location={[3, 0]} />
+  <Point location={[0, 1.5]} />
+  <Point location={[-1, 2]} />
+  <Point location={[2, 0.5]} />
+  <Point location={[3, 0]} />
+  <Point location={[4, -0.5]} />
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+</Axes>
+
+Therefore I might refer to "the line $x + 2y = 3$". This means the same thing as "the set of pairs of points $(x, y)$ such that $x + 2y = 3$" and the same thing as "the set of solutions to $x + 2y = 3$".
+
+Here is a linear equation, in three variables:
+$$x + 2y - z = 1.$$
+The set of solutions of this equation is the set of triples of numbers $(x, y, z)$ such that $x + 2y -z = 1$. For example, $(1, 1, 2)$ is a solution, as is $(-1, 1.5, 1)$.
+
+The set of triples of numbers can be plotted on a 3-dimensional cartesian axis:
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Point location={[1, 1, 2]} />
+  <Point location={[-1, 1.5, 1]} />
+</Axes>
+
+Above I have plotted two solutions to $x + 2y - z = 1$. If you plot lots of solutions, you can see that they form a plane:
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Point location={[1, 1, 2]} />
+  <Point location={[-1, 1.5, 1]} />
+  <Point location={[2, 1, 3]} />
+  <Point location={[2, -1, -1]} />
+  <Point location={[0, 0.5, 0]} />
+  <Point location={[0, 2.5, 4]} />
+  <Point location={[-0.5, 0, -1.5]} />
+  <Point location={[0, 0, -1]} />
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+</Axes>
+
+(How did I get these solutions? I fixed two of the coordinates and then determined the third. For example, for $(1, 1, 2)$, I said "suppose $x=1$ and $y=1$, then $z$ must be such that $1 + (2\cdot 1) - z = 1$, so $z$ must be $1 + 2 - 1 = 2$".) Therefore, I might refer to "the plane $x + 2y - z = 1$", which is the same thing as "the set of pairs of points $(x, y)$ such that $x + 2y - z = 1$" which is the same as "the set of solutions to $x + 2y - z = 1$".
+

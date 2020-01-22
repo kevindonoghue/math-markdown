@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AxesContext } from './Axes';
 
 function LineSegment(props) {
-  const { start, end } = props
+  const { start, end, color} = props
   const axes = useContext(AxesContext);
 
   let trace;
@@ -15,9 +15,8 @@ function LineSegment(props) {
       z: [start[2], end[2]],
       line: {
         width: 2,
-        color: 'red',
+        color: color,
       },
-      hoverinfo: 'skip',
     }
   } else {
     trace = {
@@ -27,14 +26,17 @@ function LineSegment(props) {
       y: [start[1], end[1]],
       line: {
         width: 2,
-        color: 'red',
+        color: color,
       },
-      hoverinfo: 'none',
     }
   }
   
   axes.data.push(trace);
   return null;
+}
+
+LineSegment.defaultProps = {
+  color: 'red',
 }
 
 export default LineSegment;

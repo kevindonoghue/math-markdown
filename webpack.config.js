@@ -8,6 +8,7 @@ const rehypeKatex = require("rehype-katex");
 const LATEX_MACROS = {
   "\\bpm": "\\begin{pmatrix}",
   "\\epm": "\\end{pmatrix}",
+  "\\bbR": "\\mathbb{R}",
 }
 
 module.exports = {

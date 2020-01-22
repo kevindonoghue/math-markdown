@@ -2,6 +2,7 @@ import Axes from "../components/Axes";
 import LineSegment from "../components/LineSegment";
 import Text from "../components/Text";
 import ZeroSet from "../components/ZeroSet";
+import Vector from '../components/Vector';
 
 # Hello, world!
 
@@ -14,6 +15,14 @@ Even if it is cloudy out now, it is still good to see you, world.
 Velit quis reprehenderit voluptate incididunt et pariatur aliquip. Voluptate nulla dolor quis pariatur proident elit pariatur officia. Ullamco fugiat amet eu duis ipsum. Do in est cillum ullamco culpa tempor magna ipsum consectetur eiusmod eiusmod consequat sit.
 
 Voluptate incididunt occaecat aliquip non eiusmod irure sint. Commodo ex est eiusmod veniam. Esse aute elit pariatur eiusmod. Fugiat nulla excepteur sit Lorem dolor dolore adipisicing irure et. Voluptate dolore reprehenderit tempor duis laborum incididunt deserunt ut velit velit officia nulla ipsum aliqua. Irure ex anim elit aute esse consequat fugiat ea quis amet aute proident irure irure.
+
+<Axes>
+  <Vector start={[0.1, 0.1]} disp={[0.25, 0.35]} />
+  <Vector disp={[-0.25, 0.35]} color={'blue'} />
+  <Vector disp={[-0.25, -0.35]} color={'green'} />
+  <Vector disp={[0.25, -0.35]} color={'purple'} />
+</Axes>
+
 
 <Axes>
   <LineSegment start={[-1, -1]} end={[1, 1]} />
