@@ -1,14 +1,22 @@
 import Axes from '../components/Axes';
 import Point from '../components/Point';
 import ZeroSet from '../components/ZeroSet';
+import LineSegment from '../components/LineSegment';
 
 # Linear Algebra
 
 ## What is Linear Algebra?
 Linear algebra is the study of mathematical objects that you can add:
-$$a+b$$
+
+$$
+a+b
+$$
 and that you can multiply by numbers
-$$5a.$$
+
+$$
+5a.
+$$
+
 A vector space is a set where you can add elements of the set together and where you can multiply any element in the set by a number.
 
 For example, the set of pairs of numbers (things like $(-1, 0)$ or $(5, 7)$ or $(1.5, 2.5)$, $(3, 5)$ etc) form a vector space:
@@ -23,11 +31,13 @@ Similarly for quadruples of numbers, quintuples of numbers, $n$-tuples of number
 
 The set of pairs of numbers is called $\bbR^2$. The set of triples of numbers is called $\bbR^3$. The set of $n$-tuples of numbers is called $\bbR^n$. There are more vector spaces than these, but it is helpful to just focus on these vector spaces first.
 
-There are two other vector spaces not mentioned thus far, but that are important. First, the set of numbers themselves, $\bbR$ forms a vector space. And the set containing only zero, $\{0\}$, is a vector space.
+There are two other vector spaces not mentioned thus far, but that are important. First, the set of numbers themselves, $\bbR$, forms a vector space. And the set containing only zero, $\{0\}$, is a vector space.
 
 ## Linear Systems of Equations
 In practice, most problems in linear algebra reduce to solving systems of linear equations. This is a linear equation in two variables:
-$$x + 2y = 3$$
+$$
+x + 2y = 3
+$$
 It is linear because it can be written as a sum of numbers times the variables. There are no powers bigger than 1 ($x^2$) or funky functions ($\sin(x)$) lying around. If this definition seems unsatisfying and unintuitive, that's ok. We'll revisit it in the future.
 
 The set of solutions to the equation $x + 2y = 3$ is the set of pairs of numbers $(x, y)$ such that $x + 2y = 3$. For example, $(1, 1)$ is a solution, as is $(3, 0)$.
@@ -53,7 +63,9 @@ Pictured above are two solutions to the equation $x + 2y = 3$. If you plot enoug
 Therefore I might refer to "the line $x + 2y = 3$". This means the same thing as "the set of pairs of points $(x, y)$ such that $x + 2y = 3$" and the same thing as "the set of solutions to $x + 2y = 3$".
 
 Here is a linear equation, in three variables:
-$$x + 2y - z = 1.$$
+$$
+x + 2y - z = 1.
+$$
 The set of solutions of this equation is the set of triples of numbers $(x, y, z)$ such that $x + 2y -z = 1$. For example, $(1, 1, 2)$ is a solution, as is $(-1, 1.5, 1)$.
 
 The set of triples of numbers can be plotted on a 3-dimensional cartesian axis:
@@ -77,3 +89,473 @@ Above I have plotted two solutions to $x + 2y - z = 1$. If you plot lots of solu
 
 (How did I get these solutions? I fixed two of the coordinates and then determined the third. For example, for $(1, 1, 2)$, I said "suppose $x=1$ and $y=1$, then $z$ must be such that $1 + (2\cdot 1) - z = 1$, so $z$ must be $1 + 2 - 1 = 2$".) Therefore, I might refer to "the plane $x + 2y - z = 1$", which is the same thing as "the set of pairs of points $(x, y)$ such that $x + 2y - z = 1$" which is the same as "the set of solutions to $x + 2y - z = 1$".
 
+A system of linear equations is a set of linear equations, like
+
+$$
+\begin{cases}
+x + 2y = 3
+\\ 2x + y = 0
+\end{cases}
+$$
+
+The solutions to this system of equations are all the pairs of points $(x, y)$ that satisfy both equations. For example $(-1, 2)$ is a solution to this system of equations. In fact it's the only solution. You see, if $(x, y)$ satisfies the first equation, then it lies on the line $x + 2y = 3$:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+</Axes>
+
+and if it satisfies the second equation it lies on the line $2x + y = 0$:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => 2*x + y} opacity={0.5} color={'green'}/>
+</Axes>
+
+so if it satisfies both equations, then it lies on both lines:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + y} opacity={0.5} color={'green'}/>
+</Axes>
+
+As you can, see $(-1, 2)$ is the only point lying on both lines.
+
+Some systems of equations have no solutions. For example, when the two equations represent parallel lines:
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+x + 2y = 3\\
+x + 2y = -1
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => x + 2*y + 1} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+Other systems of equation have infinitely many solutions. For example, when the two equations represent the same line:
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+x + 2y = 3\\
+2x + 4y = 6
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + 4*y - 6} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+Another way a system of equations in two variables can have no solutions is if there are three equations but their lines do not all intersect in the same point. For example, the system
+
+$$
+\begin{cases}
+x + 2y = 3\\
+2x + y = 0\\
+y = 1
+\end{cases}
+$$
+
+has solutions given by the intersection of the three lines $x + 2y = 3$, $2x + y = 0$, and $y = 1$. But when you graph these lines, you see that no point lies on all three of them:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + y} opacity={0.5} color={'green'}/>
+  <ZeroSet f={(x, y) => y - 1} opacity={0.5} color={'purple'}/>
+</Axes>
+
+so this system has no solutions.
+
+
+You can have systems of equations of three variables, for example
+
+$$
+\begin{cases}
+x + 2y - z = 1 \\
+2x + z = -1
+\end{cases}
+$$
+
+The solutions to this system of equations are the triples $(x, y, z)$ that satisfy both equations. If a triple satisfies the first equation, it lies on the plane $x + 2y - z = 1$. If it satisfies the second equation, it lies on the plane $2x + z = -1$. If it satisfies both equations, it must lie on the intersection of the two planes:
+
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
+</Axes>
+
+As you can see, the intersection of the two planes is a line, so the solutions to the system form a line. For example, here two solutions are $(1, -1.5, -3)$ and $(0, 0, -1)$, and you can see that they lie on the line of intersection:
+
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
+  <Point location={[1, -1.5, -3]} />
+  <Point location={[0, 0, -1]} />
+  <LineSegment start={[2, -3, -5]} end={[-3, 4.5, 5]} color={'orange'} />
+</Axes>
+
+There are, of course, infinitely many solutions to the system since there are infinitely many points on the line.
+
+Here is a system of three linear equations in three variables:
+
+$$
+\begin{cases}
+x + 2y - z = 1 \\
+2x + z = -1\\
+-3x -2y + 2z = 2
+\end{cases}
+$$
+
+The solutions to each equation correspond to a plane. Therefore the points $(x, y, z)$ that satisfy all three equations are the points in the intersection of these three planes. As you can see, there is just a single point that lies in all three planes:
+
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
+  <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
+</Axes>
+
+It turns out that this solution is $(-1, 1.5, 1)$:
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
+  <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
+  <Point location={[-1, 3/2, 1]} />
+</Axes>
+
+Most of the time, a system of three linear equations in three variables has a single solution. Sometimes, however, all three planes could intersect in the same line, in which case there are a line's worth of solutions. For example, in the system
+
+$$
+\begin{cases}
+x + 2y - z = 1\\
+2x + z = -1\\
+3x + 2y = 0
+\end{cases}
+$$
+
+all three planes intersect in the orange line pictured:
+
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
+  <ZeroSet f={(x, y, z) => 3*x + 2*y} opacity={0.25} color={'purple'}/>
+  <LineSegment start={[2, -3, -5]} end={[-3, 4.5, 5]} color={'orange'} />
+</Axes>
+
+You can have systems of linear equations in three variables that have no solutions. For example, you can have two parallel planes, as in this system:
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+x + 2y - z = 1\\
+-x -2y + z = 1
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => x + 2*y - z + 1} opacity={0.25} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+or you can three equations, two of which represent parallel planes, as in this system:
+
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+x + 2y - z = 1\\
+-x -2y + z = 1\\
+-3x -2y + 2z = 2
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
+  <ZeroSet f={(x, y, z) => x + 2*y - z + 1} opacity={0.25} color={'green'}/>
+  <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+the solution of whose individual equations are the planes:
+
+
+
+Lastly, consider the following system of four equations in three variables:
+$$
+\begin{cases}
+x = 0 \\
+y = 0 \\
+z = 0 \\
+x + y + z = 3
+\end{cases}
+$$
+
+Here any three of the planes have a single commont point, but no point lies in all four, so the system has no solutions:
+<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y, z) => x} opacity={0.25} color={'blue'} />
+  <ZeroSet f={(x, y, z) => y} opacity={0.25} color={'green'} />
+  <ZeroSet f={(x, y, z) => z} opacity={0.25} color={'purple'} />
+  <ZeroSet f={(x, y, z) => x + y + z - 3} opacity={0.25} color={'pink'} />
+</Axes>
+
+There are other configurations, possible, of course (three equations that each represent the same plane so that the system has a plane's worth of solutions; or four equations that represent planes that have a single common point of intersection; etc), but this is enough for now.
+
+## Solving Systems of Linear Equations
+
+What are the solutions to the system of equations?
+
+$$
+\begin{cases}
+x + 2y = 3\\
+2x + y = 0
+\end{cases}
+$$
+
+There are many ways of answering this question, and here is one. It hinges on two observations:
+
+1. If $(x, y)$ satisfies $x + 2y = 3$, then they must also satisfy $2x + 4y = 6$. That is, I can multiply an equation by a constant its solutions don't change.
+
+2. If $(x, y)$ satisfies $x + 2y = 3$ and $2x + y = 0$, then is also satisfies the sum of these two equations, $3x + 3y = 3$, because if $x + 2y = 3$ and $2x + y = 0$ then $(x + 2y) + (2x + y) = 3 + 0 = 3$.
+
+Combining the two observations, we can form a third observation:
+
+3. Given a system of linear equations, you can add a multiple of one equation to another equation and the solutions to that system won't change.
+
+Using the observations, proceed:
+
+$$
+\begin{cases}
+x + 2y = 3\\
+2x + y = 0
+\end{cases}
+$$
+
+add $-2$ times the second equation to the first
+
+$$
+\begin{cases}
+-3y = -6\\
+2x + y = 0
+\end{cases}
+$$
+
+multiply the first equation by $-1/3$:
+
+$$
+\begin{cases}
+y = 2\\
+2x + y = 0
+\end{cases}
+$$
+
+add $-1$ times the first equation to the second
+
+$$
+\begin{cases}
+y = 2\\
+2x = -2
+\end{cases}
+$$
+
+multiply the second equation by $1/2$:
+
+$$
+\begin{cases}
+y = 2\\
+x = -1
+\end{cases}
+$$
+
+At every step of the way, the system of equations changed, but the solution did not. You can see this clearly when I graph the solutions to each equation as lines:
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+x + 2y = 3\\
+2x + y = 0
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + y} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+-3y = -6\\
+2x + y = 0
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => -3*y + 6} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + y} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+y = 2\\
+2x + y = 0
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => -3*y + 6} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + y} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+y = 2\\
+2x = -2
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => y - 2} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => 2*x + 2} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+y = 2\\
+x = -1
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => y - 2} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => x + 1} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>

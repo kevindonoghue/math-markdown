@@ -2,7 +2,7 @@ import React from "react";
 import Plot from "./Plot";
 
 function Axes(props) {
-  let { dim, bounds, layout, config } = props;
+  let { dim, bounds, layout, config, style } = props;
 
   if (!bounds && dim !== 3) {
     bounds = [
@@ -37,7 +37,8 @@ function Axes(props) {
     data: [],
     layout: layout,
     config: config,
-    bounds: bounds
+    bounds: bounds,
+    style: style,
   };
 
   if (dim === 3) {
@@ -52,6 +53,7 @@ function Axes(props) {
         data={axes.data}
         layout={axes.layout}
         config={axes.config}
+        style={axes.style}
       />
     </AxesContext.Provider>
   );
@@ -63,7 +65,8 @@ Axes.defaultProps = {
   dim: 2,
   bounds: null,
   layout: null,
-  config: null
+  config: null,
+  style: {margin: '0 auto'},
 };
 
 function getDefault2dLayout(bounds) {

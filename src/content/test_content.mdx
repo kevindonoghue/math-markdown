@@ -1,0 +1,28 @@
+import Axes from '../components/Axes';
+import ZeroSet from '../components/ZeroSet';
+
+<table style={{width: '100%'}}>
+<tbody>
+<tr>
+<td style={{width: '25%'}}>
+
+$$
+\begin{cases}
+x + 2y = 3\\
+x + 2y = -1
+\end{cases}
+$$
+
+</td>
+
+<td style={{width: '75%'}}>
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
+  <ZeroSet f={(x, y) => x + 2*y + 1} opacity={0.5} color={'green'}/>
+</Axes>
+
+</td>
+</tr>
+</tbody>
+</table>
