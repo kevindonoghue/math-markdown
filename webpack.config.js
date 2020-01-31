@@ -9,6 +9,9 @@ const LATEX_MACROS = {
   "\\bpm": "\\begin{pmatrix}",
   "\\epm": "\\end{pmatrix}",
   "\\bbR": "\\mathbb{R}",
+  "\\baug": "\\begin{pmatrix}\\begin{array}",
+  "\\eaug": "\\end{array}\\end{pmatrix}",
+  "\\to": "\\rightarrow",
 }
 
 module.exports = {
