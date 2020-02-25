@@ -11,13 +11,13 @@ const LATEX_MACROS = {
   "\\to": "\\rightarrow",
 }
 function $(props) {
-  // return <TeX settings={{ macros: LATEX_MACROS }} { ...props } >{String.raw({raw: props.children})}</TeX>
-  return <TeX settings={{ macros: LATEX_MACROS }} { ...props } />
+  return <TeX settings={{ macros: LATEX_MACROS }} { ...props } >{String.raw({raw: props.children})}</TeX>
+  // return <TeX settings={{ macros: LATEX_MACROS }} { ...props } />
 }
 
 function $$(props) {
-  // return <TeX settings={{ macros: LATEX_MACROS }} { ...props } block >{String.raw({raw: props.children})}</TeX>
-  return <TeX settings={{ macros: LATEX_MACROS }} { ...props } block />
+  return <TeX settings={{ macros: LATEX_MACROS }} { ...props } block >{String.raw({raw: props.children})}</TeX>
+  // return <TeX settings={{ macros: LATEX_MACROS }} { ...props } block />
 }
 
 export { $, $$ };

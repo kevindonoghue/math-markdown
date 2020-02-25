@@ -6,7 +6,7 @@ function Text(props) {
   const axes = useContext(AxesContext);
 
   let trace;
-  if (axes.dim === 3) {
+  if (axes.three) {
     trace = {
       type: 'scatter3d',
       mode: 'text',

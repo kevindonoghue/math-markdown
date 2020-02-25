@@ -3,7 +3,7 @@ import Axes, { AxesContext } from "./Axes";
 
 function ZeroSet(props) {
   const axes = useContext(AxesContext);
-  if (axes.dim === 3) {
+  if (axes.three) {
     return <ZeroSet3d {...props} />;
   } else {
     return <ZeroSet2d {...props} />;

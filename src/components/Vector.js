@@ -4,7 +4,7 @@ import { AxesContext } from './Axes';
 
 function Vector(props) {
   const axes = useContext(AxesContext);
-  if (axes.dim === 3) {
+  if (axes.three) {
     return <Vector3d {...props} />
   } else {
     return <Vector2d {...props} />
@@ -13,11 +13,10 @@ function Vector(props) {
 
 
 function Vector3d(props) {
-  const { disp, start, color } = props;
+  const { disp, start, color, opacity } = props;
   const axes = useContext(AxesContext);
 
   const scale = Math.max(...axes.bounds.map(x => Math.max(...x.map(y => Math.abs(y)))));
-
 
   const line = {
     type: 'scatter3d',
@@ -28,24 +27,26 @@ function Vector3d(props) {
       line: {
         width: 3,
         color: color,
+        width: 3,
       },
+      opacity: opacity,
   }
 
+  const norm = Math.sqrt(disp[0]**2 + disp[1]**2 + disp[2]**2)
   const arrowhead = {
     type: 'cone',
     x: [disp[0] + start[0]],
     y: [disp[1] + start[1]],
     z: [disp[2] + start[2]],
-    u: [disp[0]],
-    v: [disp[1]],
-    w: [disp[2]],
-    sizeref: 0.25*scale,
+    u: [disp[0]/norm],
+    v: [disp[1]/norm],
+    w: [disp[2]/norm],
+    sizeref: 0.1*scale,
     anchor: 'tip',
     showscale: false,
     colorscale: [[0.0, color], [1.0, color]],
+    opacity: opacity,
   }
-
-  console.log(arrowhead);
 
   axes.data.push(arrowhead, line);
   
@@ -55,17 +56,16 @@ function Vector3d(props) {
 Vector3d.defaultProps = {
   start: [0, 0, 0],
   color: "red",
+  opacity: 1,
 }
 
 function Vector2d(props) {
-  const { disp, start, color } = props;
+  const { disp, start, color, opacity } = props;
   const axes = useContext(AxesContext);
 
   const scale = Math.max(...axes.bounds.map(x => Math.max(...x.map(y => Math.abs(y)))));
 
   const path = create2dArrowheadSVGPath(start, disp, scale);
-
-  console.log(path);
 
   const arrowhead = {
     type: 'path',
@@ -73,6 +73,7 @@ function Vector2d(props) {
     fillcolor: color,
     line: {
       color: color,
+      opacity: opacity,
     }
   };
 
@@ -84,6 +85,7 @@ function Vector2d(props) {
       line: {
         width: 3,
         color: color,
+        opacity: opacity,
       },
   };
 
@@ -96,6 +98,7 @@ function Vector2d(props) {
 Vector2d.defaultProps = {
   start: [0, 0],
   color: 'red',
+  opacity: 1,
 }
 
 function create2dArrowheadSVGPath(start, disp, scale) {

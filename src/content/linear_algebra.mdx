@@ -2,6 +2,8 @@ import Axes from '../components/Axes';
 import Point from '../components/Point';
 import ZeroSet from '../components/ZeroSet';
 import LineSegment from '../components/LineSegment';
+import Vector from '../components/Vector'
+import { $, $$ } from '../components/KatexComponents';
 
 # Linear Algebra
 
@@ -69,13 +71,13 @@ $$
 The set of solutions of this equation is the set of triples of numbers $(x, y, z)$ such that $x + 2y -z = 1$. For example, $(1, 1, 2)$ is a solution, as is $(-1, 1.5, 1)$.
 
 The set of triples of numbers can be plotted on a 3-dimensional cartesian axis:
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <Point location={[1, 1, 2]} />
   <Point location={[-1, 1.5, 1]} />
 </Axes>
 
 Above I have plotted two solutions to $x + 2y - z = 1$. If you plot lots of solutions, you can see that they form a plane:
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <Point location={[1, 1, 2]} />
   <Point location={[-1, 1.5, 1]} />
   <Point location={[2, 1, 3]} />
@@ -213,14 +215,14 @@ $$
 
 The solutions to this system of equations are the triples $(x, y, z)$ that satisfy both equations. If a triple satisfies the first equation, it lies on the plane $x + 2y - z = 1$. If it satisfies the second equation, it lies on the plane $2x + z = -1$. If it satisfies both equations, it must lie on the intersection of the two planes:
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
 </Axes>
 
 As you can see, the intersection of the two planes is a line, so the solutions to the system form a line. For example, here two solutions are $(1, -1.5, -3)$ and $(0, 0, -1)$, and you can see that they lie on the line of intersection:
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
   <Point location={[1, -1.5, -3]} />
@@ -242,14 +244,14 @@ $$
 
 The solutions to each equation correspond to a plane. Therefore the points $(x, y, z)$ that satisfy all three equations are the points in the intersection of these three planes. As you can see, there is just a single point that lies in all three planes:
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
   <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
 </Axes>
 
 It turns out that this solution is $(-1, 1.5, 1)$:
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
   <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
@@ -268,7 +270,7 @@ $$
 
 all three planes intersect in the orange line pictured:
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
   <ZeroSet f={(x, y, z) => 3*x + 2*y} opacity={0.25} color={'purple'}/>
@@ -293,7 +295,7 @@ $$
 
 <td style={{width: '75%'}}>
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => x + 2*y - z + 1} opacity={0.25} color={'green'}/>
 </Axes>
@@ -326,7 +328,7 @@ $$
 
 <td style={{width: '75%'}}>
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => x + 2*y - z + 1} opacity={0.25} color={'green'}/>
   <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
@@ -352,7 +354,7 @@ x + y + z = 3
 $$
 
 Here any three of the planes have a single commont point, but no point lies in all four, so the system has no solutions:
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x} opacity={0.25} color={'blue'} />
   <ZeroSet f={(x, y, z) => y} opacity={0.25} color={'green'} />
   <ZeroSet f={(x, y, z) => z} opacity={0.25} color={'purple'} />
@@ -861,7 +863,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style = {{width: '50%'}}>
 
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
   <ZeroSet f={(x, y, z) => -3*x - 2*y + 2*z - 2} opacity={0.25} color={'purple'}/>
@@ -904,7 +906,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => -2*x + z - 3} opacity={0.25} color={'purple'}/>
@@ -946,7 +948,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => 2*z - 2} opacity={0.25} color={'purple'}/>
@@ -988,7 +990,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => z - 1} opacity={0.25} color={'purple'}/>
@@ -1030,7 +1032,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => 2*x + 2} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => z - 1} opacity={0.25} color={'purple'}/>
@@ -1072,7 +1074,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => x + 1} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => z - 1} opacity={0.25} color={'purple'}/>
@@ -1114,7 +1116,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => 2*y - 3} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => x + 1} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => z - 1} opacity={0.25} color={'purple'}/>
@@ -1156,7 +1158,7 @@ As with the system of two equations and two variables, solve this by using the t
 </td>
 <td style={{width: '50%'}}>
   
-  <Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+  <Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
     <ZeroSet f={(x, y, z) => y - 1.5} opacity={0.25} color={'blue'}/>
     <ZeroSet f={(x, y, z) => x + 1} opacity={0.25} color={'green'}/>
     <ZeroSet f={(x, y, z) => z - 1} opacity={0.25} color={'purple'}/>
@@ -1379,7 +1381,7 @@ $$
 
 </td>
 <td style={{width: '50%'}}>
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => 2*x + z + 1} opacity={0.25} color={'green'}/>
 </Axes>
@@ -1406,7 +1408,7 @@ $$
 
 </td>
 <td style={{width: '50%'}}>
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => -4*y + 3*z + 3} opacity={0.25} color={'green'}/>
 </Axes>
@@ -1433,7 +1435,7 @@ $$
 
 </td>
 <td style={{width: '50%'}}>
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 2*y - z - 1} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => y - 0.75*z - 0.75} opacity={0.25} color={'green'}/>
 </Axes>
@@ -1460,7 +1462,7 @@ $$
 
 </td>
 <td style={{width: '50%'}}>
-<Axes dim={3} bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
+<Axes three bounds={[[-5, 5], [-5, 5], [-5, 5]]}>
   <ZeroSet f={(x, y, z) => x + 0.5 * z + 0.5} opacity={0.25} color={'blue'}/>
   <ZeroSet f={(x, y, z) => y - 0.75 * z - 0.75} opacity={0.25} color={'green'}/>
 </Axes>
@@ -1470,3 +1472,500 @@ $$
 </table>
 
 Because the row operations do not change the solution to the augmented matrix, the row-reduced augmented matrix has the same solution set as the original augmented matrix. You can see this in the previous example where, at every stage, each pair of planes intersects in the same line.
+
+## Vectors
+
+Vectors are quantities that you both add and multiply by scalars. For example, $\bbR^2$, the set of pairs of numbers, consists of vectors (we call it a "vector space"): given two elements in $\bbR^2$, for example $(2, 3)$ and $(-1, 1)$, then you can add them together to get another element in $\bbR^2$:
+
+$$
+(2, 3) + (-1, 1) = (1, 4)
+$$        
+
+and given an element of $\bbR^2$ and a number, for example $(2, 3)$ and $5$, you can multiply the element of $\bbR^2$ by the number:
+
+$$
+5\cdot (2, 3) = (10, 15)
+$$
+
+Because the number $5$ "scales" the vector $(2, 3)$, this operation is called scalar multiplication.
+
+Similarly, elements of $\bbR^3$ (triples of numbers) form a vector space (again, vector space = set of vectors):
+
+$$
+(2, 3, 1) + (-1, 1, 0) = (1, 4, 1)
+$$
+
+$$
+5 \cdot (2, 3, 1) = (10, 15, 5)
+$$
+
+and elements of $\bbR^4$:
+
+$$
+(2, 3, 1, 0) + (-1, 1, 0, 2) = (1, 4, 1, 2)
+$$
+$$
+5 \cdot (2, 3, 1, 0) = (10, 15, 5, 0)
+$$
+
+and in general the set of $n$-tuples of numbers, $\bbR^n$ forms a vector space:
+
+$$
+(a_1, a_2, \ldots, a_n) + (b_1, b_2, \ldots, b_n) = (a_1 + b_1, a_2 + b_2, \ldots, a_n + b_n)
+$$
+$$
+c\cdot (a_1, a_2, \ldots, a_n) = (ca_1, ca_2, \ldots, ca_n).
+$$
+
+The set of lists of single numbers, $\bbR^1$, forms a vector space too, of course. However $\bbR^0$ refers not to lists of zero numbers (whatever that would be), but to the set that just consists of the number $0$: $\{0\}$.
+
+Since vectors in $\bbR^2$ are pairs of numbers, you can draw them as points in the plane:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <Point location={[2, 3]} color='blue'/>
+</Axes>
+
+However the two operations associated with vectors (addition and scalar multiplication) are best represented by drawing a vector as an arrow:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <Vector disp={[2, 3]} color='blue'/>
+</Axes>
+
+Once you do this, adding vectors corresponds geometrically to gluing their arrows end to end:
+
+<Axes bounds={[[-5, 5], [-5, 5]]}>
+  <Vector disp={[2, 3]} color='blue'/>
+  <Vector disp={[-1, 1]} start={[2, 3]} color='red'/>
+  <Vector disp={[1, 4]} color='purple' />
+</Axes>
+
+Here, $(2, 3)$ and $(-1, 1)$ add up to $(1, 4)$, and also if you stick the arrow for $(-1, 1)$ onto the end of the arrow for $(2, 3)$, you end up at the point $(1, 4)$.
+
+The arrow notation helps indicate that vectors can be thought of as displacements. To start at $(-2, -2)$ and move 2 units in the $x$ direction and $3$ units in the $y$ direction means to append the arrow for $(2, 3)$ to the point $(-1, 1)$. You'll end up at the point $(-2, -2) + (2, 3) = (0, 1)$:
+
+<Axes bounds={5}>
+  <Point location={[-2, -2]} />
+  <Vector disp={[2, 3]} start={[-2, -2]} color='blue'/>
+  <Point location={[0, 1]} />
+</Axes>
+
+The arrow notation also works well for three-dimensional vectors: a vector in $\bbR^3$ is a point in 3-dimensional space. For example, here's the vector $(2, 3, 1)$:
+
+<Axes three bounds={5}>
+  <Point location={[2, 3, 1]} color='blue' />
+</Axes>
+
+which can also be represented by an arrow drawn from the origin to the point $(2, 3, 1)$:
+
+<Axes three bounds={5}>
+  <Vector disp={[2, 3, 1]} color='blue' />
+</Axes>
+
+The arrow notation gives a geometric interpretation to vector addition. You stick one arrow on the end of the other:
+
+<Axes three bounds={5}>
+  <Vector disp={[2, 3, 1]} color='blue' />
+  <Vector disp={[-1, 1, 0]} start={[2, 3, 1]} color='red' />
+  <Vector disp={[1, 4, 1]} color='purple' />
+</Axes>
+
+Scaling a vector merely stretches the arrow by that factor. For example, scaling a vector by a factor of $1.5$:
+
+<Axes three bounds={5}>
+  <Vector disp={[2, 3, 1]} color='blue' opacity={0.5}/>
+  <Vector disp={[3, 4.5, 1.5]} color='red' opacity={0.5} />
+</Axes>
+
+or scaling it by a factor of $0.5$ (so it shrinks):
+
+<Axes three bounds={5}>
+  <Vector disp={[2, 3, 1]} color='blue' opacity={0.5} />
+  <Vector disp={[1, 1.5, 0.5]} color='red' opacity={0.5} />
+</Axes>
+
+When writing vectors in coordinate form, it is often convenient to write them vertically, so that
+
+$$
+\bpm
+2 \\
+3 \\
+1
+\epm
+$$
+
+means the same thing as $(2, 3, 1)$. When you write a vector horizontally like $(2, 3, 1)$, it's called a "row vector" and when you write it vertically it's called a "column vector".
+
+
+## Linear Independence and Span
+
+Given a set of vectors $v_1, \ldots, v_n$, a linear combination is a vector obtained by multiplying them by numbers and adding them together: $a_1v_1 + \cdots + a_nv_n$ for some numbers $a_1,\ldots, a_n$. For example,
+
+$$
+-\bpm 2 \\ 3\\ 1\epm + 3 \bpm -1 \\ 1\\ 0\epm
+$$
+
+is a linear combination of the two vectors
+
+$$
+\bpm 2 \\ 3\\ 1\epm, \bpm -1 \\ 1\\ 0 \epm
+$$
+
+Also,
+$$
+\bpm 2 \\ 3 \\ 1 \epm
+$$
+is a linear combination of the two vectors, since it's $1$ times the first and $0$ times to second. The zero vector
+
+$$
+\bpm 0 \\ 0 \\ 0\epm
+$$
+
+is a linear combination of the two vectors:
+
+$$
+\bpm 0\\ 0\\ 0\epm = 0\bpm 2 \\ 3 \\ 1\epm + 0 \bpm -1 \\ 1\\ 0 \epm
+$$
+
+By plotting a lot of linear combinations of the two vectors, you can see that all linear combinations of them seemt to lie on a plane:
+
+<Axes three bounds={5}>
+  <Vector disp={[2, 3, 1]} color='blue' />
+  <Vector disp={[-1, 1, 0]} color='red' />
+  <Vector disp={[1, 4, 1]} color='purple' />
+  <Vector disp={[0, 5, 1]} color='purple' />
+  <Vector disp={[-3, -5, -2]} color='purple' />
+  <Vector disp={[3, 2, 1]} color='purple' />
+</Axes>
+
+The set of linear combinations of a set of vectors is called the span of those vectors. In this case, the span of $(2, 3, 1)$ and $(-1, 1, 0)$ is a plane. Since the zero vector is always a linear combination, the span of any set of vectors will pass through the origin.
+
+The span of a single vector is the set of scalar multiples of that vector:
+<Axes three bounds={5}>
+  <Vector disp={[2, 3, 1]} color='blue' opacity={0.5} />
+  <Vector disp={[1, 1.5, 0.5]} color='red' opacity={0.5} />
+  <Vector disp={[-2, -3, -1]} color='lightblue' opacity={0.5} />
+  <Vector disp={[-1, -1.5, -0.5]} color='pink' opacity={0.5} />
+</Axes>
+
+and so the span of a single vector is always a line.
+
+If $v_1, \ldots, v_n$ are vectors and $a_1v_1 + \cdots + a_nv_n = 0$ then one says that there is a linear relation between the vectors $v_1,\ldots, v_n$. This definition is perhaps a little silly since there's always the linear relation where each $a_i$ is $0$. If there is a relation where not all of the coefficients $a_i$ are $0$ (so at least one is nonzero), then the set of vectors $v_1,\ldots, v_n$ is said to be linearly independen. A linear relation where not all the coefficients $a_i$ are $0$ is called a nontrivial linear relation.
+
+For example, there's a nontrivial relation between the vectors
+
+$$
+\bpm 2\\ 3\\ 1\epm, \bpm -1 \\ 1 \\ 0\epm, \bpm 1 \\ 4\\ 1\epm
+$$
+
+namely,
+
+$$
+\bpm 2\\ 3\\ 1\epm + \bpm -1\\ 1\\ 0\epm - \bpm 1\\ 4\\ 1\epm = \bpm 0\\ 0\\ 0\epm
+$$
+
+The three coefficients, $1$, $1$, and $-1$ respectively, are not all zero. Intuitively, a nontrivial linear relation means that at least one vector is in the span of the others. Here, for example:
+
+$$
+\bpm 1 \\ 4\\ 1\epm = \bpm 2 \\ 3 \\ 1\epm + \bpm -1\\ 1 \\ 0 \epm
+$$
+
+A collection is vectors is said to be linearly independent if there is no nontrivial linear relation between them. Intuitively, this means that no vector is the span of the other vectors. For example,
+
+$$
+\bpm 2\\ 3\\ 1\epm, \bpm -1\\ 1\\ 0\epm, \bpm 1\\ 4\\ 1\epm
+$$
+
+is not linearly independent because of the nontrivial linear relation between the three vectors. On the other hand,
+
+$$
+\bpm 2\\ 3\\ 1\epm, \bpm -1 \\ 1\\0 \epm
+$$
+is a linearly dependent set of vectors. To see this, let
+
+$$
+a_1 \bpm 2\\ 3\\ 1\epm + a_2 \bpm -1\\ 1 \\ 0\epm = \bpm 0 \\ 0\\ 0\epm
+$$
+
+be a linear relation between the vectors. Then the following three equations are satisfied:
+
+$$
+\begin{cases}
+2a_1 - a_2 = 0\\
+3a_1 + a_2 = 0\\
+a_1 = 0
+\end{cases}
+$$
+
+This is a system of three equations in two unknowns and so can be solved by row reducing:
+
+$$
+\baug{cc|c}
+2 & -1 & 0\\
+3 & 1 & 0\\
+1 & 0 & 0
+\eaug
+\to
+\baug{cc|c}
+1 & 0 &0 \\
+0 & 1 & 0\\
+0 & 0 & 0
+\eaug
+$$
+
+From this augmented matrix, one can see that the only solution to the system is $a_1 = 0$ and $a_2 = 0$. Therefore the only relation between the two vectors is the trivial relation
+
+$$
+0\bpm 2\\3\\1\epm + 0\bpm -1 \\1\\ 0\epm = \bpm 0\\ 0\\ 0\epm
+$$
+
+If a set of vectors is not linearly independent, it is said to be linear dependent.
+
+A set of vectors is a basis if it is both spanning and linearly independent. Here are two useful facts about bases:
+
+1. If $v_1,\ldots, v_n$ is a basis, then any vector can be written uniquely as a linear combination of $v_1,\ldots, v_n$.
+2. Any basis of $\bbR^n$ has exactly $n$ vectors.
+
+The standard basis of $\bbR^n$ consists of the vectors $e_1,\ldots, e_n$ where $e_i$ is a vector with zeros in every coordinate, except for a $1$ in the $i$th entry. For example, the standard basis of $\bbR^2$ consists of
+
+$$
+e_1 = \bpm 1\\ 0 \epm,~e_2 = \bpm 0 \\ 1\epm
+$$
+
+and the standard basis of $\bbR^3$ consists of
+
+$$
+e_1 = \bpm 1 \\ 0\\ 0\epm,~e_2 = \bpm 0 \\ 1\\ 0 \epm,~e_3 = \bpm 0 \\ 0 \\ 1\epm
+$$
+
+## Maps of Sets
+
+The functions you've seen before (like $f(x) = x^2$ or $f(x) = \sin(x)$ or $f(x) = e^x$ etc) are things that take as input a number and output another number. For example if $f(x) = x^2$, then if you input $5$ then $f$ will output $25$. This is written as $f(5) = 25$.
+
+There's no reason that one must restrict inputs and outputs to all numbers. One can define functions that take as input elements in some set $X$ and output elements in some possibly different set $Y$. The sentence "f is a function that takes as inputs elements in $X$ and outputs $Y$" is written as
+
+$$
+f: X \to Y
+$$
+
+The set $X$ is called the domain of $f$ and the set $Y$ is called the codomain of $f$. So the domain is the set of inputs and the codomain is the set of possible outputs.
+
+For example, if $X = \{0, 1, 2\}$ (the set containing the numbers $0$, $1$, and $2$) and $Y = \{0, 1\}$ (the set containing the numbers $0$ and $1$), then you can define a function
+
+$$
+f_1: \{ 0, 1, 2\} \to \{0, 1\}
+$$
+
+by
+
+$f_1(0) = 0$, $f_1(1) = 0$, and $f_1(2) = 1$. The input $0$ outputs $0$, the input $1$ also outputs $0$, and the input $2$ outputs $1$.
+
+For another example, define
+
+$$
+f_2: \{0, 1\} \to \{0, 1, 2\}
+$$
+
+by $f_2(0) = 1$ and $f_2(1) = 2$. The input $0$ outputs $1$ and the input $1$ outputs $2$.
+
+If every element in the codomain output of at least one input then the function is called surjective. So $f_1$ is surjective but $f_2$ is not ($f_2$ is not surjective because $2$ is not an output of any input). If every output is the output of at most one input then the function is called injective. So $f_2$ is injective but $f_1$ is not ($f_1$ is not injective because $0$ is the output of two inputs).
+
+Functions that are both surjective and injective are called bijective. Since surjective means that every element in the codomain is the output of at least one input and injective means that every element in the codomain is the output of at most one input, then bijective means that every element in the codomain is the output of precisely one input.
+
+The functions $f_1$ and $f_2$ are not bijective: $f_1$ is not bijective because it is not injective and $f_2$ is not bijective because it is not surjective. Define
+
+$$
+f_3: \{0, 1, 2\} \to \{0, 1, 2\}
+$$
+
+by $f_3(0) = 1$, $f_3(1) = 2$, and $f_3(2) = 0$. Then every element in the codomain is the output of exactly one input, so $f_3$ is bijective. Since every element in the codomain of $f_3$ is the output of precisely one input, you can reverse $f_3$ by sending every output to its unique corresponding input. This function is called the inverse of $f_3$ and denoted $f_3^{-1}$:
+
+$$
+f_3^{-1}: \{0, 1, 2\} \to \{0, 1, 2\}
+$$
+
+where $f_3^{-1}(0) = 2$, $f_3^{-1}(1) = 0$, and $f_3^{-1}(2) = 1$. Said another way, $f_3^{-1}$ is obtained from $f_3$ by switching the inputs and outputs. Since bijective functions have inverses, the word bijective is often also called "invertible".
+
+People often call "injective" functions "one-to-one" and "surjective" functions "onto". I don't like this terminology because "one-to-one" seems (to me) to connote bijectivity.
+
+Functions are also called "maps" and "transformations". For most purposes "function", "map", and "transformation" are synonyms. Some people use "function" to refer to things whose codomain is $\bbR$, so I tend to use "map" or "transformation".
+
+Here's a function from $\bbR^3$ to $\bbR^2$. Let
+
+$$
+f_4: \bbR^3 \to \bbR^2
+$$
+
+be defined by
+
+$$
+f_4(x, y, z) = (x^2 + y^2, x^2 - z^2)
+$$
+
+For example, the input $(1, 1, 1)$ outputs $(2, 0)$. Vectors in $\bbR^2$ and $\bbR^3$ are often written vertically for convenience, so you could also write
+
+$$
+f_4\bpm x\\ y\\z\epm = \bpm x^2 + y^2 \\ x^2 - z^2 \epm
+$$
+
+Another way to write this function is to use the symbol "$\mapsto$" which is read as "maps to":
+
+$$
+\bpm x \\y\\ z\epm \mapsto \bpm x^2 + y^2 \\ x^2 - z^2 \epm
+$$
+
+this might read as "a point $(x, y, z)$ is mapped to the point $(x^2 + y^2, x^2 - z^2)$".
+
+The function $f_4$ is not injective, since $(1, 1, 1)$ and $(-1, 1, 1)$ are mapped to the same point. It is not surjective, because $x^2 + y^2$ is never negative. Therefore any point in the codomain with a negative first coordinate is not an output of $f_4$.
+
+
+## Linear Maps
+
+A linear map is a map from $\bbR^n\to \bbR^m$ (for some $n$ and $m$) like
+
+$$
+\bpm x\\ y\epm \mapsto \bpm x + y\\ x - y\epm
+$$
+
+or
+
+$$
+\bpm x \\ y \\ z \epm \mapsto \bpm 2x + y \\ -x -5y\epm
+$$
+
+or
+
+$$
+\bpm x\\y\\z \epm \mapsto \bpm 0\\ x \\ y\epm
+$$
+
+That is, every coordinate of the output is a sum of numbers times input coordinates. Notably, there are no terms like $x^2$ or $y^2$ or $\sin(z)$ in any of the output coordinates. And there are no nonzero constant terms, so something like
+
+$$
+\bpm x \\ y \\ z \epm \mapsto \bpm 1 \\ x + 2 \\ y \epm
+$$
+
+In order to define linear maps precisely, one takes a different more abstract view. A linear map $f: \bbR^n \to \bbR^m$ is a map such that
+
+1. $f(x + y) = f(x) + f(y)$ (where $x$ and $y$ are vectors in $\bbR^n$)
+2. $f(cx) = cf(x)$ (where $x$ is a vector in $\bbR^n$ and $c$ is a number).
+
+Remember that a vector space is a set with two operations (addition and multiplication by numbers) and these two properties correspond to the two operations on vectors. For consistency's sake, perhaps linear maps should be called vector maps, or perhaps vector spaces should be called linear spaces, but the terminology is already too entrenched to be changed.
+
+You can check that the three example of linear maps above in this section satisfy both of these properties. The best way to describe linear maps, however, is via matrices.
+
+
+## Matrices and Matrix Multiplication
+
+An $m\times n$ matrix is simply a grid of numbers. Here's a $2\times 3$ matrix:
+
+$$
+\bpm 1 & 1 & 0\\ 0 & 1 & 1 \epm
+$$
+
+and here's a $5\times 1$ matrix
+
+$$
+\bpm 1 \\ 2\\ -1 \\-1\\ 0\epm
+$$
+(essentially the same thing as a vector in $\bbR^5$!).
+
+If $A$ is a matrix, then $A_{ij}$ refers to the entry in the $i$th row and $j$th column. Traditionally $i$ and $j$ are counted starting from $1$ (rather than 0), and $A_{ij}$ is often called the $i,j$th entry of $A$. For example, if
+
+$$
+A = \bpm 1 & 1 & 0\\ 0 & 1 & 1 \epm
+$$
+
+then $A_{12} = 1$ and $A_{13} = 0$.
+
+The essential point about matrices is that you can "multiply" them. You can multiply an $m\times n$ matrix with an $n\times k$ matrix to get an $m\times k$ matrix. Exactly how you multiply matrices is best described by first descibing how to multiply a $1\times n$ matrix and an $n\times 1$ matrix. Take, for example,
+
+$$
+A = \bpm 0 & 1 & 2 & 3 \epm
+$$
+
+$$
+B = \bpm 4 \\ 5 \\ 6\\ 7\epm
+$$
+
+Then the product $A$ and $B$ is taken by multiplying each coordinate of $A$ with the corresponding coordinate of $B$, then adding them together:
+
+$$
+AB = \bpm 0 \cdot 4 + 1 \cdot 5 + 2 \cdot 6 + 3 \cdot 7 \epm
+$$
+Since $A$ is a $1\times n$ matrix and $B$ is a $n\times 1$ matrix, $AB$ is a $1\times 1$ matrix. Now let $A$ be a larger matrix, say, a $2\times 3$ matrix:
+
+$$
+A = \bpm 1 & 1 & 0\\ 0 & 1 & 1\epm
+$$
+
+and let $B$ be a $3\times 2$ matrix, say,
+
+$$
+B = \bpm 1 & 2\\ -1 & 2\\ 0 & 0 \epm
+$$
+
+Then the product $AB$ is calculated as follows: the $ij$th entry of $AB$ is determined by multiplying the $i$th row of $A$ (a $1\times 3$ matrix) with the $j$th column of $B$ (a $3\times 1$ matrix):
+
+$$
+AB = \bpm 1 & 1 & 0\\ 0 & 1 & 1\epm  \bpm 1 & 2\\ -1 & 2\\ 0 & 0 \epm = \bpm 1 \cdot 1 + 1 \cdot (-1) + 0 \cdot 0 & 1 \\cdot 2 + 1 \\cdot 2 + 0 \\cdot 0 \\ 0 \\cdot 1 + 1 \\cdot (-1) + 0 \\cdot 0 & 0 \\cdot 2 + 1 \\cdot 2 + 1 \\cdot 0 \epm = \bpm 0 & 4\\ -1 & 2 \epm
+$$
+
+
+You can also add two $m\times n$ matrices together:
+
+$$
+\bpm 1 & 1 & 0 \\ 0 & 1 & 1\epm + \bpm 0 & 1 & 1\\ 1 & 0 & 0 \epm = \bpm 1 + 0 & 1 + 1 & 0 + 1 \\ 0 + 1 & 1 + 0 & 1 + 0 \epm = \bpm 1 & 2 & 1\\ 1 & 1 & 1\epm
+$$
+
+and you can multiply matrices by scalars:
+
+$$
+5\cdot \bpm 1 & 1 & 0 \\ 0 & 1 & 1\epm = \bpm 5 & 5 & 0\\ 0 & 5 & 5\epm
+$$
+
+(so, the set of $m\times n$ matrices forms a vector space).
+
+Matrix addition and multiplication has the following properties:
+
+1. $(AB)C = A(BC)$, that is, the order in which you multiply pairs of matrices doesn't matter.
+2. $(A + B)C = AC + BC$ and $A(B + C) = AB = AC$.
+3. If $A$ and $B$ are matrices and $c$ is a number, then $(cA)B = A(cB)$.
+
+It is not necessarily true that $AB$ is equal to $BA$. For example
+
+$$
+\bpm 1 & 1 \\ 0  & 1\epm bpm 1 & 0 \\ 1 & 1\epm = \bpm 2 & 1\\ 1 &1 \epm
+$$
+
+where
+
+$$
+\bpm 1 & 0 \\ 1 & 1 \epm \bpm 1 & 1\\ 0 & 1\epm = \bpm 1 & 1\\ 1 & 2\epm
+$$
+
+
+## Matrices, Linear Maps, and Composition
+
+If $A$ is an $m\times n$ matrix, define a map $\bbR^n\to \bbR^m$ as
+
+$$
+x\mapsto Ax
+$$
+
+where $x$ here is a vector in $\bbR^n$ written vertically, so that it can be thought of as an $n\times 1$ matrix. Since $A$ is $m\times n$, the product $Ax$ is $m\times 1$, and hence can be thought of as a vector in $\bbR^m$ written vertically. For example, let
+
+$$
+A = \bpm 1 & 1 & 0\\ 0 & 1 & 1\epm
+$$
+
+then the map $x\mapsto Ax$ is
+
+$$
+\bpm x_1 \\ x_2 \\ x_3 \epm \mapsto \bpm 1 & 1 & 0\\ 0 & 1 & 1\epm \bpm x_1 \\ x_2 \\ x_3 \epm = \bpm x_1 + x_2\\ x_2 + x_3 \epm
+$$
+
+This map is linear because $A(x + y) = Ax + Ay$ and (cA)x = A(cx)$ by two of the properties of matrix multiplication. It is a fact that any linear map from $\bbR^n$ to $\bbR^m$ is $x\mapsto Ax$ for some $m\times n$ matrix $A$.
+
+Given maps $f: X \to Y$ and $g: Y\to Z$, the outputs of $f$ are inputs of $g$ so you can "compose" $f$ and $g$ by inputting the outputs of $f$ into $g$. That is, $f$ composed with $g$ is the map $x\mapsto g(f(x))$. Note the weird order here where $g$ is applied after $f$ but appears to the left of $f$ in the notation. The map $x\mapsto g(f(x))$ is often denoted $g\circ f$, so that $(g\circ f)(x) = g(f(x))$.
+
+If $f:\bbR^n\to \bbR^m$ is defined by $Ax$ for some $m\times n$ matrix $A$ and $f:\bbR^m\to \bbR^k$ is defined by $Bx$ for some $n\times k$ matrix $B$, then $(g\circ f)(x) = g(f(x)) = BAx$. So the composition of $f$ then $g$, $g\circ f$, is the linear map determined by the matrix $BA$. So composition of linear maps corresponds to matrix multiplication.

@@ -2,38 +2,48 @@ import React from "react";
 import Plot from "./Plot";
 
 function Axes(props) {
-  let { dim, bounds, layout, config, style } = props;
+  let { three, bounds, layout, config, style } = props;
 
-  if (!bounds && dim !== 3) {
+  if (!bounds && !three) {
     bounds = [
       [-1, 1],
       [-1, 1]
     ];
-  }
-  if (!bounds && dim === 3) {
+  } else if (!bounds && three) {
     bounds = [
       [-1, 1],
       [-1, 1],
       [-1, 1]
     ];
+  } else if (!isNaN(bounds) && !three) {
+    bounds = [
+      [-bounds, bounds],
+      [-bounds, bounds],
+    ]
+  } else if (!isNaN(bounds) && three) {
+    bounds = [
+      [-bounds, bounds],
+      [-bounds, bounds],
+      [-bounds, bounds]
+    ]
   }
 
-  if (!layout && dim !== 3) {
+  if (!layout && !three) {
     layout = getDefault2dLayout(bounds);
   }
-  if (!layout && dim === 3) {
+  if (!layout && three) {
     layout = getDefault3dLayout(bounds);
   }
 
-  if (!config && dim !== 3) {
+  if (!config && !three) {
     config = { displayModeBar: false, staticPlot: true };
   }
-  if (!config && dim === 3) {
+  if (!config && three) {
     config = { displayModeBar: false };
   }
 
   const axes = {
-    dim: dim,
+    three: three,
     data: [],
     layout: layout,
     config: config,
@@ -41,7 +51,7 @@ function Axes(props) {
     style: style,
   };
 
-  if (dim === 3) {
+  if (three) {
     get3dAxes(bounds).forEach(x => axes.data.push(x));
   }
 
@@ -49,7 +59,7 @@ function Axes(props) {
     <AxesContext.Provider value={axes}>
       {props.children}
       <Plot
-        dim={dim}
+        three={three}
         data={axes.data}
         layout={axes.layout}
         config={axes.config}
@@ -59,15 +69,15 @@ function Axes(props) {
   );
 }
 
-const AxesContext = React.createContext();
-
 Axes.defaultProps = {
-  dim: 2,
+  three: false,
   bounds: null,
   layout: null,
   config: null,
   style: {margin: '0 auto'},
 };
+
+const AxesContext = React.createContext();
 
 function getDefault2dLayout(bounds) {
   return {

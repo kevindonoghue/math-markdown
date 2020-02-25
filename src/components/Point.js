@@ -5,16 +5,16 @@ function Point(props) {
   let { location, color, textposition, label, noLabel } = props;
   const axes = useContext(AxesContext);
 
-  if (!label && !noLabel && axes.dim === 3) {
+  if (!label && !noLabel && axes.three) {
     label = `(${location[0]}, ${location[1]}, ${location[2]})`;
   }
 
-  if (!label && !noLabel && axes.dim !== 3) {
+  if (!label && !noLabel && !axes.three) {
     label = `(${location[0]}, ${location[1]})`;
   }
 
   let trace;
-  if (axes.dim === 3) {
+  if (axes.three) {
     trace = {
       type: 'scatter3d',
       mode: 'markers+text',

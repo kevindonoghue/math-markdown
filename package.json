@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@matejmazur/react-katex": "^3.0.2",
+    "@material-ui/core": "^4.9.0",
     "dom-to-image": "^2.6.0",
     "ify-loader": "^1.1.0",
     "katex": "^0.11.1",

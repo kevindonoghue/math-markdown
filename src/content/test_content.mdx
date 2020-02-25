@@ -1,28 +1,162 @@
-import Axes from '../components/Axes';
-import ZeroSet from '../components/ZeroSet';
+import Axes from "../components/Axes";
+import ZeroSet from "../components/ZeroSet";
+import { $, $$ } from '../components/KatexComponents';
 
-<table style={{width: '100%'}}>
-<tbody>
-<tr>
-<td style={{width: '25%'}}>
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Card from "@material-ui/core/Card";
+import Popover from "../components/Popover";
+import Button from "@material-ui/core/Button";
+import Typography from '@material-ui/core/Typography';
 
-$$
-\begin{cases}
-x + 2y = 3\\
-x + 2y = -1
-\end{cases}
-$$
 
-</td>
+# Main Title
 
-<td style={{width: '75%'}}>
+Sit ea ullamco laboris aliquip ea eiusmod quis ea enim dolor aliqua. Mollit reprehenderit reprehenderit laborum adipisicing deserunt voluptate non ullamco veniam adipisicing aute et. Lorem sint proident cillum ex quis duis qui.
 
-<Axes bounds={[[-5, 5], [-5, 5]]}>
-  <ZeroSet f={(x, y) => x + 2*y - 3} opacity={0.5} color={'blue'}/>
-  <ZeroSet f={(x, y) => x + 2*y + 1} opacity={0.5} color={'green'}/>
-</Axes>
+Cupidatat aliqua elit nostrud enim cillum deserunt officia pariatur excepteur nulla nostrud id tempor. Laborum magna duis laboris excepteur elit. Esse eu qui enim nostrud.
 
-</td>
-</tr>
-</tbody>
-</table>
+Ex anim nisi ea dolor culpa occaecat excepteur dolore nulla aute. Duis ullamco ad aute magna anim adipisicing mollit ut adipisicing nulla. Quis reprehenderit eiusmod minim qui consectetur minim excepteur consequat amet aliquip nulla nostrud et. Minim do anim ipsum et ut voluptate et qui commodo non enim do pariatur. Id tempor pariatur ex elit nulla occaecat ipsum deserunt mollit ipsum. Nostrud mollit aliqua tempor exercitation labore ut enim consectetur. In officia excepteur velit culpa nostrud.
+
+Proident ut amet officia exercitation ex. Excepteur minim sunt fugiat et incididunt cillum consectetur enim id eiusmod qui tempor minim velit. Laborum dolor velit quis id pariatur veniam culpa velit veniam esse nulla dolor reprehenderit.
+
+Deserunt excepteur et ut nostrud non sit fugiat proident. Est sit do anim aute. Non laboris culpa qui quis est aliquip reprehenderit. Nostrud duis est qui laborum commodo veniam culpa officia nostrud tempor anim consequat. Velit consequat eu adipisicing voluptate duis pariatur cupidatat occaecat labore quis laborum adipisicing ullamco quis.
+
+Aute do dolore exercitation nulla amet et cillum non sunt ipsum. Lorem deserunt sit labore fugiat amet dolor pariatur aliqua id. Minim anim proident deserunt velit culpa. Fugiat consectetur officia mollit voluptate velit sunt ad do dolor minim mollit incididunt laborum. Et consequat labore excepteur veniam excepteur aliqua esse aliqua. Culpa irure est eiusmod officia ex aliquip proident ullamco irure do officia anim. Irure id in exercitation et incididunt ut qui nulla deserunt labore culpa.
+
+Anim amet est commodo ut nisi quis. Commodo duis aliqua magna dolor veniam cillum labore amet velit irure magna. Labore sit velit nisi velit ea ea deserunt. Anim eiusmod qui aliqua ut incididunt veniam. Sunt anim aute velit sunt officia velit et sit proident enim ad non nostrud culpa. Proident dolor proident nisi et ipsum consectetur duis.
+
+<p>blahblahblah text blah here's more text
+  <Popover text="open popover">
+    <p>
+      Fugiat quis sunt sit nisi dolore ad ea adipisicing occaecat non. Consectetur Lorem nulla sunt non veniam id sit voluptate ex cillum. Pariatur in consectetur ad minim ut. Non laboris eiusmod aute consequat nostrud ipsum excepteur ad laboris non aliquip.
+      Ididunt. Irure nostrud occaecat sunt do occaecat ad laborum voluptate in proident quis.
+      Fugiat quis sunt sit nisi dolore ad ea adipisicing occaecat non. Consectetur Lorem nulla sunt non veniam id sit voluptate ex cillum. Pariatur in consectetur ad minim ut. Non laboris eiusmod aute consequat nostrud ipsum excepteur ad laboris non aliquip.
+      Ididunt. Irure nostrud occaecat sunt do occaecat ad laborum voluptate in proident quis.
+      Fugiat quis sunt sit nisi dolore ad ea adipisicing occaecat non. Consectetur Lorem nulla sunt non veniam id sit voluptate ex cillum. Pariatur in consectetur ad minim ut. Non laboris eiusmod aute consequat nostrud ipsum excepteur ad laboris non aliquip.
+      </p>
+      <p>
+      Ididunt. Irure nostrud occaecat sunt do occaecat ad laborum voluptate in proident quis.
+      Fugiat quis sunt sit nisi dolore ad ea adipisicing occaecat non. Consectetur Lorem nulla sunt non veniam id sit voluptate ex cillum. Pariatur in consectetur ad minim ut. Non laboris eiusmod aute consequat nostrud ipsum excepteur ad laboris non aliquip.
+      Ididunt. Irure nostrud occaecat sunt do occaecat ad laborum voluptate in proident quis.
+      Fugiat quis sunt sit nisi dolore ad ea adipisicing occaecat non. Consectetur Lorem nulla sunt non veniam id sit voluptate ex cillum. Pariatur in consectetur ad minim ut. Non laboris eiusmod aute consequat nostrud ipsum excepteur ad laboris non aliquip.
+    </p>
+  </Popover>
+text continued here blah blah</p>
+
+
+Dolore adipisicing do nostrud<Popover text="asdf"><p>asdfasdf</p><p>asdfasdf</p></Popover> adipisicing nulla laborum cupidatat nostrud<Popover text="wert"><p>sdfasdfasdfadf</p></Popover> magna.
+
+## Sub Title 1
+
+<TableContainer component={Paper}>
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell align="center">A</TableCell>
+        <TableCell align="center">B</TableCell>
+        <TableCell align="center">C</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      <TableRow>
+        <TableCell>asdf</TableCell>
+        <TableCell>
+          Quis velit occaecat magna amet aliquip quis nisi aliquip mollit
+          consequat ea.
+        </TableCell>
+        <TableCell>Ea adipisicing laborum excepteur eiusmod.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={3} align="center">Nisi id occaecat non labore sit sit.</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>sdfg</TableCell>
+        <TableCell>
+          Deserunt incididunt excepteur eu ut id magna incididunt ea quis
+          excepteur minim ad magna est.
+        </TableCell>
+        <TableCell>
+          <$$>
+            {String.raw`
+            \begin{cases}
+            x + 2y = 3\\
+            x + y = 2
+            \end{cases}
+            `}
+          </$$>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell><$$>x^2 + c</$$></TableCell>
+        <TableCell>
+          Deserunt incididunt excepteur eu
+          <$$>\int x^2 dx</$$>
+          ut id magna incididunt ea quis
+          excepteur minim ad magna est.
+        </TableCell>
+        <TableCell>
+          Adipisicing proident voluptate est et ullamco aliquip officia anim eu
+          consectetur nisi minim ad.
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>
+          a
+        </TableCell>
+        <TableCell>
+          <Axes>
+            <ZeroSet f={(x, y)=>x**2 - y} />
+          </Axes>
+        </TableCell>
+        <TableCell>
+          <Axes dim={3}>
+            <ZeroSet f={(x, y, z)=>x**2 - y - z**3} />
+          </Axes>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</TableContainer>
+
+## Sub Title 2
+
+<List>
+  <ListItem>Apples</ListItem>
+  <ListItem>Oranges</ListItem>
+  <ListItem>Bananas</ListItem>
+</List>
+
+Nisi esse velit culpa esse ullamco nisi labore ipsum incididunt eu fugiat cillum mollit. Elit enim eiusmod reprehenderit ut laborum qui sunt voluptate culpa et culpa consectetur. Cillum qui aute aliquip incididunt cillum tempor officia mollit dolor adipisicing ex duis ut. Adipisicing culpa ipsum reprehenderit ipsum aute nostrud duis ut minim reprehenderit commodo eu velit elit. Voluptate qui est do consectetur amet.
+
+Dolore non dolor minim aliquip pariatur enim ullamco magna pariatur aliquip tempor do aute. Anim est culpa excepteur cupidatat amet magna esse ea incididunt officia et excepteur incididunt sint. Qui officia labore fugiat proident nostrud incididunt voluptate ut est.
+
+Excepteur occaecat culpa qui esse sit do nulla qui quis velit in eiusmod sunt id. Eiusmod eiusmod exercitation incididunt consequat incididunt aliquip enim nisi. Eiusmod in irure exercitation consectetur duis elit Lorem aute in enim deserunt. Aute duis tempor esse consectetur ipsum ea reprehenderit. Sunt veniam adipisicing occaecat est non mollit.
+
+## Sub Title 3
+
+<Grid container spacing={3}>
+  <Grid item xs={8}>
+    Hello, world!
+  </Grid>
+  <Grid item xs>
+    Hello, world!
+  </Grid>
+  <Grid item xs>
+    Hello, world!
+  </Grid>
+</Grid>
+
+Nulla dolor labore officia proident eiusmod officia quis laboris excepteur dolor. Ut ex nulla nisi do laboris magna incididunt tempor. Amet consectetur magna excepteur aliqua non in minim voluptate laboris elit amet labore. Aliquip nulla minim pariatur eu eu et laborum officia exercitation amet amet enim.
+
+Mollit eiusmod nostrud Lorem ullamco ut sunt exercitation cillum officia irure mollit. Anim Lorem est dolor tempor est velit officia quis nisi. Nisi ex fugiat laboris veniam amet aute deserunt voluptate ad.
+
+Duis tempor est anim laborum ut esse aliquip dolore in aliquip sint in. Eiusmod sint ut minim pariatur magna cupidatat voluptate et dolor magna. Id enim deserunt veniam ut deserunt dolore magna laborum tempor Lorem culpa. Aliqua veniam sit eu aliquip non enim incididunt culpa. Occaecat dolor qui sunt cillum consectetur. Mollit ex esse aute sunt proident.

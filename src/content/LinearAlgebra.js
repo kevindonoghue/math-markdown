@@ -58,23 +58,25 @@ const Content = () => (
     <p>
       There are two other vector spaces not mentioned thus far, but that are
       important. First, the set of numbers themselves, <$>\bbR</$>, forms a
-      vector space. And the set containing only zero, <$>{String.raw`\{0\}`}</$>, is a
-      vector space.
+      vector space. And the set containing only zero, <$>{String.raw`\{0\}`}</$>
+      , is a vector space.
     </p>
     <h2>Linear Systems of Equations</h2>
     <p>
       In practice, most problems in linear algebra reduce to solving systems of
       linear equations. This is a linear equation in two variables:
-      <$$>x + 2y = 3</$$>
+    </p>
+    <$$>x + 2y = 3</$$>
+    <p>
       It is linear because it can be written as a sum of numbers times the
-      variables. There are no powers bigger than 1 ($x^2$) or funky functions
-      ($\sin(x)$) lying around. If this definition seems unsatisfying and
-      unintuitive, that's ok. We'll revisit it in the future.
+      variables. There are no powers bigger than 1 (<$>x^2</$>) or funky
+      functions (<$>\sin(x)</$>) lying around. If this definition seems
+      unsatisfying and unintuitive, that's ok. We'll revisit it in the future.
     </p>
     <p>
-      The set of solutions to the equation $x + 2y = 3$ is the set of pairs of
-      numbers $(x, y)$ such that $x + 2y = 3$. For example, $(1, 1)$ is a
-      solution, as is $(3, 0)$.
+      The set of solutions to the equation <$>x + 2y = 3</$> is the set of pairs
+      of numbers <$>(x, y)</$> such that <$>x + 2y = 3</$>. For example,{" "}
+      <$>(1, 1)</$> is a solution, as is <$>(3, 0)</$>.
     </p>
     <p>The set of pairs of numbers can be plotted on the cartesian axis:</p>
     <Axes
@@ -87,8 +89,8 @@ const Content = () => (
       <Point location={[3, 0]} />
     </Axes>
     <p>
-      Pictured above are two solutions to the equation $x + 2y = 3$. If you plot
-      enough solutions, you see that they form a line:
+      Pictured above are two solutions to the equation <$>x + 2y = 3</$>. If you
+      plot enough solutions, you see that they form a line:
     </p>
     <Axes
       bounds={[
@@ -177,10 +179,11 @@ const Content = () => (
       \end{cases}
       `}</$$>
     <p>
-      The solutions to this system of equations are all the pairs of points <$>(x,
-      y)</$> that satisfy both equations. For example <$>(-1, 2)</$> is a solution to
-      this system of equations. In fact it's the only solution. You see, if <$>(x,
-      y)</$> satisfies the first equation, then it lies on the line <$>x + 2y = 3</$>:
+      The solutions to this system of equations are all the pairs of points{" "}
+      <$>(x, y)</$> that satisfy both equations. For example <$>(-1, 2)</$> is a
+      solution to this system of equations. In fact it's the only solution. You
+      see, if <$>(x, y)</$> satisfies the first equation, then it lies on the
+      line <$>x + 2y = 3</$>:
     </p>
     <Axes
       bounds={[
@@ -409,7 +412,9 @@ const Content = () => (
         color={"purple"}
       />
     </Axes>
-    <p>It turns out that this solution is <$>(-1, 1.5, 1)</$>:</p>
+    <p>
+      It turns out that this solution is <$>(-1, 1.5, 1)</$>:
+    </p>
     <Axes
       dim={3}
       bounds={[
@@ -504,8 +509,8 @@ const Content = () => (
       </tbody>
     </table>
     <p>
-      or you can have three equations, two of which represent parallel planes, as in
-      this system:
+      or you can have three equations, two of which represent parallel planes,
+      as in this system:
     </p>
     <table style={{ width: "100%" }}>
       <tbody>
@@ -906,8 +911,8 @@ const Content = () => (
 
       <tr>
         <td colSpan={3} style={{ textAlign: "center" }}>
-          Add <$>-2</$> times the second row to the first row to eliminate <$>y</$> from
-          the first row
+          Add <$>-2</$> times the second row to the first row to eliminate{" "}
+          <$>y</$> from the first row
         </td>
       </tr>
 
@@ -1447,8 +1452,10 @@ const Content = () => (
       1  & 0 & -1\\
       0 & 1 & 2
       \eaug
-    `}</$$>
-        <$$>{String.raw`
+    `}
+    </$$>
+    <$$>
+      {String.raw`
       \baug{ccc|c}
       1 & 2 & -1 & 1\\
       2 & 0 & 1 & -1\\
@@ -1483,7 +1490,7 @@ const Content = () => (
       <li>
         The pivot columns are ordered by their nonzero rows. That is, the pivot
         column for row <$>i</$> must precede the pivot colum for row <$>j</$> if{" "}
-        <$>{String.raw`i < `}j</$>.
+        <$>{String.raw`i < j`}</$>.
       </li>
       <li>
         If there are <$>k</$> pivot columns, then they must be the pivot columns
@@ -1694,8 +1701,8 @@ const Content = () => (
 
       <tr>
         <td colSpan={2} style={{ textAlign: "center" }}>
-          multiply the second row by $-1/4$ to start to turn the second column
-          into a pivot column
+          multiply the second row by <$>-1/4</$> to start to turn the second
+          column into a pivot column
         </td>
       </tr>
 
@@ -1779,6 +1786,18 @@ const Content = () => (
       matrix, the row-reduced augmented matrix has the same solution set as the
       original augmented matrix. You can see this in the previous example where,
       at every stage, each pair of planes intersects in the same line.
+    </p>
+
+    <h2>Vectors</h2>
+    
+    <p>
+      Vectors are quantities that you both add and multiply by scalars. For example, <$>{String.raw`\bbR^2`}</$>, the set of pairs of numbers, consists of vectors (we call it a "vector space"): given two elements in <$>{String.raw`\bbR^2`}</$>, for example <$>(2, 3)</$> and <$>(-1, 1)</$>, then you can add them together to get another element in <$>{String.raw`\bbR^2`}</$>:
+    </p>
+      <$$>
+      (2, 3) + (-1, 1) = (1, 4)
+      </$$>
+      <p>
+        
     </p>
   </div>
 );
