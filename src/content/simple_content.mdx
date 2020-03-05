@@ -1,0 +1,7 @@
+import Axes from '../components/Axes';
+import ZeroSet from '../components/ZeroSet';
+
+<Axes three>
+  <ZeroSet f={(x, y, z) => 5*x + 2*y - 3*z} />
+  <ZeroSet f={(x, y, z) => x**2 + y**2 + z**2 - 0.5} color='blue' opacity={0.1} />
+</Axes>
