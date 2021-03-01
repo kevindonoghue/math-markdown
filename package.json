@@ -38,7 +38,7 @@
     "react-plotly.js": "^2.4.0",
     "rehype": "^9.0.1",
     "stats.js": "^0.17.0",
-    "three": "^0.111.0",
+    "three": "^0.125.0",
     "three-orbit-controls": "^82.1.0"
   }
 }
